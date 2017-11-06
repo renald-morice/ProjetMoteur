@@ -1,0 +1,5 @@
+/media/storage/Programming/Personal/CSharp/Engine/Engine/obj/x86/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/media/storage/Programming/Personal/CSharp/Engine/Engine/bin/Debug/Engine.exe.mdb
+/media/storage/Programming/Personal/CSharp/Engine/Engine/bin/Debug/Engine.exe
+/media/storage/Programming/Personal/CSharp/Engine/Engine/obj/x86/Debug/Engine.exe
+/media/storage/Programming/Personal/CSharp/Engine/Engine/obj/x86/Debug/Engine.exe.mdb
