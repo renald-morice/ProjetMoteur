@@ -46,6 +46,10 @@ namespace Engine {
             return scene;
         }
 
+        public Scene AddScene(Scene scene) {
+            _allScenes.Add(scene);
+        }
+
         public void RemoveScene(Scene scene) {
             _allScenes.Remove(scene);
         }
