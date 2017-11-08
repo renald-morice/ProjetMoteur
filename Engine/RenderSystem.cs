@@ -17,7 +17,7 @@ namespace Engine
 		}*/
 
         public void Iterate(Scene scene) {
-            List<IRenderComponent> allComponents = scene.GetAllActiveComponents<IRenderComponent>();
+            List<IRenderComponent> allComponents = scene.GetAllComponents<IRenderComponent>();
 
             foreach (IRenderComponent component in allComponents) {
                 component.Render();

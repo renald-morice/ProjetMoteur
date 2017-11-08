@@ -44,9 +44,9 @@ namespace Engine{
             return _allGameObjects.Find(c => c.Name == name);
         }
 
-        //Get all active components in the GameObjects of the scene
+        //Get all components in the GameObjects of the scene
         //A GameObject is a child of GameEntity
-        public List<T> GetAllActiveComponents<T>(bool activeComponentOnly=true) where T : class {
+        public List<T> GetAllComponents<T>(bool activeComponentOnly=true) where T : class {
 
             List<T> result = new List<T>();
 

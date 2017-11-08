@@ -17,7 +17,7 @@ namespace Engine
 		}*/
 
         public void Iterate(Scene scene) {
-            List<ILogicComponent> allComponents = scene.GetAllActiveComponents<ILogicComponent>();
+            List<ILogicComponent> allComponents = scene.GetAllComponents<ILogicComponent>();
 
             foreach (ILogicComponent component in allComponents) {
                 component.Update();
