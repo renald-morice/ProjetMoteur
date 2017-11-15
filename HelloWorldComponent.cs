@@ -1,7 +1,7 @@
 ﻿using System;
 using Engine;
 
-public class HelloWorldComponent : Component, ILogicComponent, IRenderComponent
+public class HelloWorldComponent : GameComponent, ILogicComponent, IRenderComponent
 {
 	private int _count = 0;
 

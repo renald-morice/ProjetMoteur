@@ -22,12 +22,14 @@ namespace Engine
 		// NOTE (francois):
 		//  See NOTE about _position.
 		//  Should this also be done here? (Currently, these fields are just placeholders,
-		//  so I did not think about them any further)
+		//  so I did not think about it any further)
 		public Vector3 scale;
 		public Quaternion rotation;
 		
 		public GameObject parent { get; private set; }
 		public GameObject[] children { get; private set; }
+		
+		// TODO: Add SetParent(Transform) method (a SetChild(Transform) method may not be _that_ useful)
 	}
 }
 

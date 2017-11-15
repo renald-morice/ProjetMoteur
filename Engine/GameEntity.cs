@@ -4,7 +4,6 @@ using System.Collections.Generic;
 namespace Engine
 {
 	// Basic entity.
-	// TODO: Maybe add a name ?
 	public abstract class GameEntity
 	{
 		private List<Component> _allComponents;

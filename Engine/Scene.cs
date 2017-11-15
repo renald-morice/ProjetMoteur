@@ -35,6 +35,15 @@ namespace Engine{
             return gameObject;
         }
 
+        // TODO: Should this take any parameters (position, rotation, name, ...?)
+        public T Instanciate<T>() where T : GameObject
+        {
+            T result = (T) Activator.CreateInstance(typeof(T), new object[] {});
+            
+            _allGameObjects.Add(result);
+            return result;
+        }
+
         public void RemoveGameObject(GameObject gameObject) {
             _allGameObjects.Remove(gameObject);
         }
