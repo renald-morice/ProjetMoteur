@@ -11,7 +11,7 @@ namespace Engine
 	    public string Name { get; private set; }
 	    
 	   	// FIXME?: The fact that this constructor needs a name means that every derived class of GameObject
-		//  needs to implement it so they can be instanciated in Scene.Instanciate<T>.
+		//  needs to implement it so they can be instantiated in Scene.Instantiate<T>.
 		//  Otherwhise, there needs to be two different constructors, one which takes a name and another that does not.
 		//  (A default value for the parameter did not change anything)
         public GameObject(string name) {

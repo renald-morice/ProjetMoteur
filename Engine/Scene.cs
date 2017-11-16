@@ -36,7 +36,7 @@ namespace Engine{
         }
 
         // TODO: Should this take any parameters (position, rotation, name, ...?)
-        public T Instanciate<T>() where T : GameObject
+        public T Instantiate<T>() where T : GameObject
         {
             T result = (T) Activator.CreateInstance(typeof(T), new object[] {});
             

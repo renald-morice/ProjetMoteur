@@ -53,7 +53,7 @@ namespace Engine
                 GameObject firstObject = firstScene.AddEmptyGameObject("FirstObject");
                 firstObject.AddComponent<HelloWorldComponent>();
 
-                GameObject secondObject = firstScene.Instanciate<Cube>();
+                GameObject secondObject = firstScene.Instantiate<Cube>();
 
                 //Set the new scene as active
                 _game.sceneManager.ActiveScene = firstScene;
