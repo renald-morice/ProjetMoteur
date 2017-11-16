@@ -17,7 +17,7 @@ namespace Engine
         private SceneManager sceneManager;
         
         public GameWindow window { get; private set; }
-        
+
         public bool quit;
         public double FPS { get; private set; }
         
