@@ -10,7 +10,7 @@ namespace Engine
 		//  to mimic the behaviour of Unity.
 		//  Is this a good thing? (Currently, nothing breaks if we change them manually
 		//  (and I do not see how it could...)
-		private Vector3 _position;
+		private Vector3 _position = Vector3.Zero;
 		public Vector3 position { get ; set; }
 		
 		public Vector3 localPosition
@@ -23,8 +23,8 @@ namespace Engine
 		//  See NOTE about _position.
 		//  Should this also be done here? (Currently, these fields are just placeholders,
 		//  so I did not think about it any further)
-		public Vector3 scale;
-		public Quaternion rotation;
+		public Vector3 scale = Vector3.One;
+		public Quaternion rotation = Quaternion.Identity;
 		
 		public GameObject parent { get; private set; }
 		public GameObject[] children { get; private set; }

@@ -29,11 +29,41 @@ namespace Engine
 
 	        foreach (IRenderComponent component in allComponents)
 	        {
-		        component.Render();
+		        _RenderComponent(component);
 	        }
 
 	        game.window.SwapBuffers();
         }
+
+		private void _RenderComponent(IRenderComponent component)
+		{
+			GL.MatrixMode(MatrixMode.Modelview);
+			GL.PushMatrix();
+
+			// FIXME: Everything that needs rendering has to be attached to a gameObject
+			//  (otherwhise, there is no transform, hence no position)
+			//  This check should probably be done directly when querying components.
+			
+			// Translate, rotate then scale the component
+			if (component is GameComponent)
+			{
+				var gameObject = (component as GameComponent).gameObject;
+				var position = gameObject.transform.position;
+				var rotation = gameObject.transform.rotation;
+				var scale = gameObject.transform.scale;
+
+				var angle = Math.Acos(rotation.W) * 2 * 180 / Math.PI;
+
+				GL.Translate(position.X, position.Y, position.Z);
+				// FIXME: Rotation in X and Y are broken!
+				GL.Rotate(angle, rotation.X, rotation.Y, rotation.Z);
+				GL.Scale(scale.X, scale.Y, scale.Z);
+			}
+			
+			component.Render();
+			
+			GL.PopMatrix();
+		}
     }
 }
 

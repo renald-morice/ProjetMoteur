@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
@@ -14,8 +15,6 @@ namespace Engine
         public void Render()
         {
             GL.Begin(PrimitiveType.Triangles);
-
-            // TODO: Use translation, rotation, scale, ...
             
             GL.Color3(Color.MidnightBlue);
             GL.Vertex2(-1.0f, 1.0f);
