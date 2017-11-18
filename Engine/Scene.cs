@@ -23,6 +23,14 @@ namespace Engine{
         public Scene(string name) {
             _name = name;
             _allGameObjects = new List<GameObject>();
+
+            
+            var window = Game.Instance.window;
+            
+            // I see you...
+            // FIXME: This should be accessible from anywhere,
+            //  maybe make it a global, an attribute of each gameObject.
+            Instantiate<Camera>();
         }
 
         //----------

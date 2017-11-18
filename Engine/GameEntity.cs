@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace Engine
 {
+	// NOTE/TODO: It may happen that we try to query a non-existing GameEntity.
+	//  In that case, maybe it would be useful to introduce a NullGameEntity that just does nothing,
+    //  instead of crashing when accessing a real null value.
+	//  The same could be done with GameComponents.
 	// Basic entity.
 	public abstract class GameEntity
 	{

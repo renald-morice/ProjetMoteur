@@ -33,7 +33,7 @@ using OpenTK;
 namespace Engine
 {
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    struct VertexPositionColor
+    public struct VertexPositionColor
     {
         public Vector3 Position;
         public uint Color;

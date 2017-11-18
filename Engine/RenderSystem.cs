@@ -1,35 +1,71 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Resources;
+using Engine.Utils;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using Quaternion = System.Numerics.Quaternion;
 
 namespace Engine
 {
 	public class RenderSystem : ISystem
 	{
         public void Iterate(Scene scene) {
+	        List<CameraComponent> allCameras = scene.GetAllComponents<CameraComponent>();
+	        if (allCameras.Count == 0) return;
+	        
             List<IRenderComponent> allComponents = scene.GetAllComponents<IRenderComponent>();
 	        
 	        var game = Game.Instance;
+	        var window = game.window;
 
-	        // render graphics
+	        // Clear whole screen to black
+	        GL.Disable(EnableCap.ScissorTest);
+	        
+	        GL.ClearColor(Color.Black);
 	        GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
- 
-	        GL.MatrixMode(MatrixMode.Projection);
-	        GL.LoadIdentity();
 	        
-	        // TODO: Use camera position and orientation
-	        //  (also, check to see if a component is in view (and all that jazz) before drawing it)
+	        GL.Enable(EnableCap.ScissorTest);
 	        
-	        // TODO: Btw, this should be in its own Input namespace or whatever, instead of querying it
-	        //  from game.window (even if it just returns whatever game.window stores).
-	        double badMouseBeahviour = 1  - (game.window.Mouse.WheelPrecise / 2);
-	        if (badMouseBeahviour < 0) badMouseBeahviour = 0;
+	        GL.Enable(EnableCap.DepthTest);
 	        
-	        GL.Ortho(-badMouseBeahviour, badMouseBeahviour, -badMouseBeahviour, badMouseBeahviour, 0.0, 4.0);
-
-	        foreach (IRenderComponent component in allComponents)
+	        // Render each camera viewport
+	        foreach (var camera in allCameras)
 	        {
-		        _RenderComponent(component);
+		        var cameraPos = camera.gameObject.transform.position;
+		        var cameraRot = camera.gameObject.transform.rotation;
+		        var cameraLens = camera.lens;
+		        var cameraViewport = camera.viewport;
+
+		        var vX = (int) (cameraViewport.X * window.Width);
+		        var vY = (int) (cameraViewport.Y * window.Height);
+		        var vW = (int) (cameraViewport.Width * window.Width);
+		        var vH = (int) (cameraViewport.Height * window.Height);
+		        
+		        GL.Viewport(vX, vY, vW, vH);		        
+		        
+		        GL.Scissor(vX, vY, vW, vH); // Clear color area uses scissor region instead of viewport
+		        GL.ClearColor(camera.clearColor);
+		        GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+		        
+		        GL.MatrixMode(MatrixMode.Projection);
+		        GL.LoadIdentity();
+
+		        GL.MatrixMode(MatrixMode.Modelview);
+		        GL.LoadIdentity();
+
+		        GL.Frustum(cameraLens.left, cameraLens.right, cameraLens.bottom, cameraLens.top,
+			        	   cameraLens.nearPlane, cameraLens.farPlane);
+
+		        // Invert camera position and rotation
+		        GL.Translate(-cameraPos.X, -cameraPos.Y, -cameraPos.Z);
+		        GL.Rotate(-_AngleFromQuaternion(cameraRot.W), cameraRot.X, cameraRot.Y, cameraRot.Z);
+
+		        foreach (IRenderComponent component in allComponents)
+		        {
+			        _RenderComponent(component);
+		        }
 	        }
 
 	        game.window.SwapBuffers();
@@ -52,10 +88,9 @@ namespace Engine
 				var rotation = gameObject.transform.rotation;
 				var scale = gameObject.transform.scale;
 
-				var angle = Math.Acos(rotation.W) * 2 * 180 / Math.PI;
+				var angle = _AngleFromQuaternion(rotation.W);
 
 				GL.Translate(position.X, position.Y, position.Z);
-				// FIXME: Rotation in X and Y are broken!
 				GL.Rotate(angle, rotation.X, rotation.Y, rotation.Z);
 				GL.Scale(scale.X, scale.Y, scale.Z);
 			}
@@ -63,6 +98,15 @@ namespace Engine
 			component.Render();
 			
 			GL.PopMatrix();
+		}
+		
+		// TODO: Should be moved to an utility class.
+		//       Also do a to / from deg to / from rad.
+		private float _AngleFromQuaternion(float w)
+		{
+			var result = MathUtils.Rad2Deg((float) Math.Acos(w)) * 2;
+			
+			return result;
 		}
     }
 }

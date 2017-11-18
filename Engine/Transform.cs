@@ -13,6 +13,7 @@ namespace Engine
 		private Vector3 _position = Vector3.Zero;
 		public Vector3 position { get ; set; }
 		
+		// TODO: Do the same for local rotation? scale?
 		public Vector3 localPosition
 		{
 			get => (parent == null) ? position : position - parent.transform.position;
@@ -30,6 +31,8 @@ namespace Engine
 		public GameObject[] children { get; private set; }
 		
 		// TODO: Add SetParent(Transform) method (a SetChild(Transform) method may not be _that_ useful)
+		
+		// TODO: Add Rotate / Translate / Scale, ...
 	}
 }
 

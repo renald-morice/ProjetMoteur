@@ -1,4 +1,6 @@
-﻿namespace Engine.Primitives
+﻿using Engine.Primitives.Renderer;
+
+namespace Engine.Primitives
 {
     public class Cube : GameObject
     {

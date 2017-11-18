@@ -31,8 +31,14 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <Compile Include="CameraMouseMovement.cs" />
+    <Compile Include="Engine\Camera.cs" />
+    <Compile Include="Engine\CameraComponent.cs" />
+    <Compile Include="Engine\Primitives\Renderer\CubeRenderer.cs" />
+    <Compile Include="Engine\Primitives\Renderer\ShapeRenderer.cs" />
+    <Compile Include="Engine\Utils\MathUtils.cs" />
+    <Compile Include="Engine\Utils\VBOUtils.cs" />
     <Compile Include="Engine\VertexPositionColor.cs" />
-    <Compile Include="Engine\CubeRenderer.cs" />
     <Compile Include="Engine\Game.cs" />
     <Compile Include="Engine\GameComponent.cs" />
     <Compile Include="Engine\Primitives\Cube.cs" />
