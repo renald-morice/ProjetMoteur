@@ -24,7 +24,7 @@ namespace Engine
         public GameWindow window { get; private set; }
 
         public bool quit;
-        public double FPS { get; private set; }
+        public float FPS { get; private set; }
         
         public static Game InitGame()
         {
@@ -44,6 +44,7 @@ namespace Engine
 
                 // TODO: Add inputs
                 _game.allSystems.Add(new LogicSystem());
+                _game.allSystems.Add(new PhysicSystem(1.0f / _game.FPS));
                 // TODO: Add other outputs
                 _game.allSystems.Add(new RenderSystem());
 
@@ -62,6 +63,7 @@ namespace Engine
                 
                 GameObject secondObject = firstScene.Instantiate<Cube>();
                 secondObject.AddComponent<HelloWorldComponent>();
+                secondObject.AddComponent<RigidBodyComponent>();
                 
                 var camera = firstScene.GetGameObject("Main Camera"); 
                 camera.AddComponent<CameraMouseMovement>();
@@ -110,8 +112,6 @@ namespace Engine
                 //  recorded in the foreach loop above.
                 //  Another solution would be to handle inputs diffently (it is always the fist system anyway).
                 if (_game.quit) window.Exit();
-                
-                Console.Out.WriteLine(_game.window.RenderTime);
             };
 
             return _game;
@@ -132,6 +132,16 @@ namespace Engine
 
                 return _game;
             }
+        }
+
+        // TODO/IMPROVEMENT: Use this method when creating a component 
+        //  to add it to it's system's component list
+        //  (which removes the need to iterate over every component in the scene).
+        public T GetSystem<T>() where T : class, ISystem
+        {
+            T result = allSystems.Find(s => s is T) as T;
+            
+            return result ;
         }
     }
 }

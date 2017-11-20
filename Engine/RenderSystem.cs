@@ -60,7 +60,7 @@ namespace Engine
 
 		        // Invert camera position and rotation
 		        GL.Translate(-cameraPos.X, -cameraPos.Y, -cameraPos.Z);
-		        GL.Rotate(-_AngleFromQuaternion(cameraRot.W), cameraRot.X, cameraRot.Y, cameraRot.Z);
+		        GL.Rotate(-MathUtils.AngleFromQuaternion(cameraRot.W), cameraRot.X, cameraRot.Y, cameraRot.Z);
 
 		        foreach (IRenderComponent component in allComponents)
 		        {
@@ -88,7 +88,7 @@ namespace Engine
 				var rotation = gameObject.transform.rotation;
 				var scale = gameObject.transform.scale;
 
-				var angle = _AngleFromQuaternion(rotation.W);
+				var angle = MathUtils.AngleFromQuaternion(rotation.W);
 
 				GL.Translate(position.X, position.Y, position.Z);
 				GL.Rotate(angle, rotation.X, rotation.Y, rotation.Z);
@@ -98,15 +98,6 @@ namespace Engine
 			component.Render();
 			
 			GL.PopMatrix();
-		}
-		
-		// TODO: Should be moved to an utility class.
-		//       Also do a to / from deg to / from rad.
-		private float _AngleFromQuaternion(float w)
-		{
-			var result = MathUtils.Rad2Deg((float) Math.Acos(w)) * 2;
-			
-			return result;
 		}
     }
 }
