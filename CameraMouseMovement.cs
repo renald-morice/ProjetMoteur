@@ -9,6 +9,10 @@ namespace Engine
         private KeyboardDevice _keyStates;
 
         public float speed = 0.1f;
+
+        public void Start()
+        {
+        }
         
         public void Update()
         {

@@ -64,10 +64,17 @@ namespace Engine
                 GameObject secondObject = firstScene.Instantiate<Cube>();
                 secondObject.AddComponent<HelloWorldComponent>();
                 secondObject.AddComponent<RigidBodyComponent>();
+
+                GameObject ground = firstScene.Instantiate<Cube>();
+                ground.transform.position = new Vector3(0, -5, 0);
+                ground.transform.scale = new Vector3(100, 1, 100);
+                var body = ground.AddComponent<RigidBodyComponent>();
+                body.rigidBody.IsStatic = true;
                 
                 var camera = firstScene.GetGameObject("Main Camera"); 
                 camera.AddComponent<CameraMouseMovement>();
 
+                /*
                 var cameraComponent = firstObject.AddComponent<CameraComponent>();
                 cameraComponent.viewport.X = 0.5f;
                 cameraComponent.viewport.Y = 0.5f;
@@ -85,9 +92,9 @@ namespace Engine
                 tutu.lens.right = 0.2f;
                 tutu.lens.bottom = -0.2f;
                 tutu.lens.top = 0.2f;
-                 
+                 */
                 var toto = camera.GetComponent<CameraComponent>();
-                toto.viewport.Width = 0.5f;
+                //toto.viewport.Width = 0.5f;
                 toto.clearColor = Color.DarkBlue;
 
                 //Set the new scene as active
@@ -105,7 +112,7 @@ namespace Engine
                 if (window.Keyboard[Key.Escape]) _game.quit = true;   
             
                 foreach (ISystem system in _game.allSystems) {
-                    if (_game.sceneManager.ActiveScene != null) system.Iterate(_game.sceneManager.ActiveScene);
+                    if (_game.sceneManager.ActiveScene != null) system.Iterate();
                 }
 
                 // NOTE(francois): This is done here, because input handling is also a 'system'. So the quit event is
@@ -134,14 +141,27 @@ namespace Engine
             }
         }
 
-        // TODO/IMPROVEMENT: Use this method when creating a component 
-        //  to add it to it's system's component list
-        //  (which removes the need to iterate over every component in the scene).
-        public T GetSystem<T>() where T : class, ISystem
+        public T GetSystem<T>() where T : class // FIXME: Be more precise than just 'class'.
         {
             T result = allSystems.Find(s => s is T) as T;
             
             return result ;
+        }
+
+        public void RegisterComponent(Component component)
+        {
+            foreach (var system in allSystems)
+            {
+                if (system.IsValidComponent(component)) system.TrackComponent(component);
+            }
+        }
+
+        public void UnregisterComponent(Component component)
+        {
+            foreach (var system in allSystems)
+            {
+                if (system.IsValidComponent(component)) system.UntrackComponent(component);
+            }
         }
     }
 }

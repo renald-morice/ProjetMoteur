@@ -9,13 +9,16 @@ using Quaternion = System.Numerics.Quaternion;
 
 namespace Engine
 {
-	public class RenderSystem : ISystem
+	public class RenderSystem : System<IRenderComponent>
 	{
-        public void Iterate(Scene scene) {
+        public override void Iterate()
+        {
+	        UpdateComponentList();
+	        
+	        var scene = SceneManager.Instance.ActiveScene;
+	        
 	        List<CameraComponent> allCameras = scene.GetAllComponents<CameraComponent>();
 	        if (allCameras.Count == 0) return;
-	        
-            List<IRenderComponent> allComponents = scene.GetAllComponents<IRenderComponent>();
 	        
 	        var game = Game.Instance;
 	        var window = game.window;
@@ -62,7 +65,7 @@ namespace Engine
 		        GL.Translate(-cameraPos.X, -cameraPos.Y, -cameraPos.Z);
 		        GL.Rotate(-MathUtils.AngleFromQuaternion(cameraRot.W), cameraRot.X, cameraRot.Y, cameraRot.Z);
 
-		        foreach (IRenderComponent component in allComponents)
+		        foreach (IRenderComponent component in _components)
 		        {
 			        _RenderComponent(component);
 		        }

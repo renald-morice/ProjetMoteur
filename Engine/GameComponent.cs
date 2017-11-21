@@ -7,5 +7,6 @@
     public class GameComponent : Component
     {
         public GameObject gameObject { get => entity as GameObject; }
+        public override void Awake() {}
     }
 }

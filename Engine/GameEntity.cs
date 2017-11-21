@@ -22,6 +22,8 @@ namespace Engine
 			result._entity = this;
 
 			_allComponents.Add(result);
+			
+			result.Awake();
 
 			return result;
 		}

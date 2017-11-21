@@ -7,15 +7,17 @@ using Jitter.LinearMath;
 
 namespace Engine
 {
+    // TODO: Allow specifying/modifying the shape
     public class RigidBodyComponent : GameComponent, IPhysicComponent
     {
         // NOTE(francois): This should be private. And we should have wrappers.
         //  But no TIME.
         public RigidBody rigidBody;
 
-        public RigidBodyComponent()
+        public override void Awake()
         {
-            rigidBody = new RigidBody(new BoxShape(1, 1, 1));
+            var scale = gameObject.transform.scale;
+            rigidBody = new RigidBody(new BoxShape(2 *scale.X, 2 * scale.Y, 2 * scale.Z));
             
             PhysicSystem system = Game.Instance.GetSystem<PhysicSystem>();
             system.world.AddBody(rigidBody);

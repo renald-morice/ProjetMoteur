@@ -9,6 +9,10 @@ public class HelloWorldComponent : GameComponent, ILogicComponent, IRenderCompon
 {
 	private int _count = 0;
 
+	public void Start()
+	{	
+	}
+	
 	public void Update() {
 		++_count;
 

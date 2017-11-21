@@ -7,7 +7,7 @@ using OpenTK.Graphics;
 
 namespace Engine
 {
-    public class PhysicSystem : ISystem
+    public class PhysicSystem : System<IPhysicComponent>
     {
         private readonly int updatesPerFrame;
         
@@ -22,11 +22,11 @@ namespace Engine
             world = new World(new CollisionSystemSAP());
         }
         
-        public void Iterate(Scene scene)
+        public override void Iterate()
         {
-            List<IPhysicComponent> allComponents = scene.GetAllComponents<IPhysicComponent>();
+            UpdateComponentList();
             
-            foreach (var component in allComponents)
+            foreach (var component in _components)
             {
                 component.PreUpdate();
             }
@@ -35,13 +35,13 @@ namespace Engine
             {
                 world.Step(_frameTime / updatesPerFrame, true);
                 
-                foreach (var component in allComponents)
+                foreach (var component in _components)
                 {
                     component.FixedUpdate();
                 }
             }
 
-            foreach (var component in allComponents)
+            foreach (var component in _components)
             {
                 component.PostUpdate();
             }
