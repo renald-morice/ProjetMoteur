@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 using OpenTK.Input;
 
 namespace Engine
@@ -20,7 +21,7 @@ namespace Engine
             //  from game.window (even if it just returns whatever game.window stores).
             if (_mouse == null) _mouse = Game.Instance.window.Mouse;
             
-            float badMouseBeahviour = 1  - (_mouse.WheelPrecise / 2);
+            float badMouseBeahviour = 10  - (_mouse.WheelPrecise / 2);
             
             var movement = new Vector3(0, 0, 0);
 
@@ -35,12 +36,12 @@ namespace Engine
             var length = movement.Length();
             if (length != 0) movement /= length;
 		
-            movement *= speed;
+            movement *= speed * ((badMouseBeahviour * badMouseBeahviour / 10) + 1);
 
             gameObject.transform.position +=  movement;
             
             var position = gameObject.transform.position;
-            gameObject.transform.position = new Vector3(position.X, position.Y, badMouseBeahviour);  
+            gameObject.transform.position = new Vector3(position.X, position.Y, badMouseBeahviour * Math.Abs(badMouseBeahviour));  
         }
     }
 }

@@ -44,7 +44,7 @@ namespace Engine
 
                 // TODO: Add inputs
                 _game.allSystems.Add(new LogicSystem());
-                _game.allSystems.Add(new PhysicSystem(1.0f / _game.FPS));
+                _game.allSystems.Add(new PhysicSystem(1.0f / _game.FPS, 5));
                 // TODO: Add other outputs
                 _game.allSystems.Add(new RenderSystem());
 
@@ -64,6 +64,13 @@ namespace Engine
                 GameObject secondObject = firstScene.Instantiate<Cube>();
                 secondObject.AddComponent<HelloWorldComponent>();
                 secondObject.AddComponent<RigidBodyComponent>();
+
+                for (int i = 0; i < 10; ++i)
+                {
+                    var cube = firstScene.Instantiate<Cube>();
+                    cube.transform.position = new Vector3(0, 10 + i * 2, 0);
+                    cube.AddComponent<RigidBodyComponent>();
+                }
 
                 GameObject ground = firstScene.Instantiate<Cube>();
                 ground.transform.position = new Vector3(0, -5, 0);
@@ -119,6 +126,8 @@ namespace Engine
                 //  recorded in the foreach loop above.
                 //  Another solution would be to handle inputs diffently (it is always the fist system anyway).
                 if (_game.quit) window.Exit();
+                
+                Console.Out.WriteLine(1.0f / (window.UpdateTime + window.RenderTime));
             };
 
             return _game;

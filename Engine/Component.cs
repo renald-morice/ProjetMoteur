@@ -6,7 +6,7 @@ namespace Engine
 	// Basic component.
 	// TODO/FIXME: In Unity, a component that can be activated/enabled is a 'Behavior' (derived from component).
 	//             Still in Unity, a component has a reference to a GameObject, not a GameEntity.
-	// TODO: Probably add an Awake method called just after the component instantiation (_entity must be set).
+	// TODO: Add a OnDestroy method that each component can/must implement.
 	public abstract class Component
 	{
 		// NOTE: Only the engine should be able to modify this value.
@@ -27,7 +27,7 @@ namespace Engine
 			this._active = active;
 		}
 		
-		abstract public void Awake();
+		virtual public void Awake() {}
 
 		public Component()
 		{

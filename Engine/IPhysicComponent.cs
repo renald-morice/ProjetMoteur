@@ -2,11 +2,18 @@
 {
     public interface IPhysicComponent
     {
+        // NOTE: Both of these should be internal to our Engine.
         // From our representation to the physics library.
+        void CopyState();
+        // Physics library to our representation.
+        void ApplyChanges();
+        
+        
+        // Callback before starting any physics update.
         void PreUpdate();
-        // Physic library changes only.
+        // Callback after each physics update.
         void FixedUpdate();
-        // From the physics library to our representation.
+        // Callback after every physics update is done.
         void PostUpdate();
     }
 }
