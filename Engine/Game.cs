@@ -127,7 +127,7 @@ namespace Engine
                 //  Another solution would be to handle inputs diffently (it is always the fist system anyway).
                 if (_game.quit) window.Exit();
                 
-                Console.Out.WriteLine(1.0f / (window.UpdateTime + window.RenderTime));
+                //Console.Out.WriteLine(1.0f / (window.UpdateTime + window.RenderTime));
             };
 
             return _game;
