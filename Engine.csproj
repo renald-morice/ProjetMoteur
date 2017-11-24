@@ -34,6 +34,7 @@
     <Compile Include="CameraMouseMovement.cs" />
     <Compile Include="Engine\Camera.cs" />
     <Compile Include="Engine\CameraComponent.cs" />
+    <Compile Include="Engine\Input.cs" />
     <Compile Include="Engine\IPhysicComponent.cs" />
     <Compile Include="Engine\PhysicSystem.cs" />
     <Compile Include="Engine\Primitives\Renderer\CubeRenderer.cs" />

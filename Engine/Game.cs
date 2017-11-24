@@ -41,10 +41,12 @@ namespace Engine
                 window.VSync = VSyncMode.On;
                 
                 _game.allSystems = new List<ISystem>();
-
+                
+                Input.Init();
+                
                 // TODO: Add inputs
                 _game.allSystems.Add(new LogicSystem());
-                _game.allSystems.Add(new PhysicSystem(1.0f / _game.FPS, 5));
+                _game.allSystems.Add(new PhysicSystem(1.0f / _game.FPS, 1));
                 // TODO: Add other outputs
                 _game.allSystems.Add(new RenderSystem());
 
@@ -126,6 +128,8 @@ namespace Engine
                 //  recorded in the foreach loop above.
                 //  Another solution would be to handle inputs diffently (it is always the fist system anyway).
                 if (_game.quit) window.Exit();
+                
+                Input.SaveOldButtonsStatus();
                 
                 //Console.Out.WriteLine(1.0f / (window.UpdateTime + window.RenderTime));
             };

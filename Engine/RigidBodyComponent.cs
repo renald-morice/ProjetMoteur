@@ -14,6 +14,8 @@ namespace Engine
         // FIXME: JitterPhysics does not implement kinematic bodies (bodies without collisions).
         // NOTE(francois): Unlike Unity, RigidBody and Collider are the same.
         public RigidBody rigidBody;
+        
+        // TODO: Add OnGround property
 
         public override void Awake()
         {
