@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using OpenTK.Input;
 
 namespace Engine
@@ -17,6 +18,16 @@ namespace Engine
         {
             Horizontal,
             Vertical
+        }
+
+        public static Vector2 mousePosition
+        {
+            get => new Vector2(_mouse.X, _mouse.Y);
+        }
+
+        public static float mouseWheel
+        {
+            get => _mouse.WheelPrecise;
         }
 
         public static void Init()
