@@ -12,7 +12,8 @@ namespace Engine
 		[STAThread]
 		public static int Main (String[] args)
 		{
-		 	Game game = Game.Instance;
+
+            Game game = Game.Instance;
 			
 			game.Run();
 
