@@ -24,7 +24,7 @@ namespace Engine
         public GameWindow window { get; private set; }
 
         public bool quit;
-        public double FPS { get; private set; }
+        public float FPS { get; private set; }
         
         public static Game InitGame()
         {
@@ -41,9 +41,12 @@ namespace Engine
                 window.VSync = VSyncMode.On;
                 
                 _game.allSystems = new List<ISystem>();
-
+                
+                Input.Init();
+                
                 // TODO: Add inputs
                 _game.allSystems.Add(new LogicSystem());
+                _game.allSystems.Add(new PhysicSystem(1.0f / _game.FPS, 1));
                 // TODO: Add other outputs
                 _game.allSystems.Add(new RenderSystem());
 
@@ -62,10 +65,25 @@ namespace Engine
                 
                 GameObject secondObject = firstScene.Instantiate<Cube>();
                 secondObject.AddComponent<HelloWorldComponent>();
+                secondObject.AddComponent<RigidBodyComponent>();
+
+                for (int i = 0; i < 10; ++i)
+                {
+                    var cube = firstScene.Instantiate<Cube>();
+                    cube.transform.position = new Vector3(0, 10 + i * 2, 0);
+                    cube.AddComponent<RigidBodyComponent>();
+                }
+
+                GameObject ground = firstScene.Instantiate<Cube>();
+                ground.transform.position = new Vector3(0, -5, 0);
+                ground.transform.scale = new Vector3(100, 1, 100);
+                var body = ground.AddComponent<RigidBodyComponent>();
+                body.rigidBody.IsStatic = true;
                 
                 var camera = firstScene.GetGameObject("Main Camera"); 
                 camera.AddComponent<CameraMouseMovement>();
 
+                /*
                 var cameraComponent = firstObject.AddComponent<CameraComponent>();
                 cameraComponent.viewport.X = 0.5f;
                 cameraComponent.viewport.Y = 0.5f;
@@ -83,9 +101,9 @@ namespace Engine
                 tutu.lens.right = 0.2f;
                 tutu.lens.bottom = -0.2f;
                 tutu.lens.top = 0.2f;
-                 
+                 */
                 var toto = camera.GetComponent<CameraComponent>();
-                toto.viewport.Width = 0.5f;
+                //toto.viewport.Width = 0.5f;
                 toto.clearColor = Color.DarkBlue;
 
                 //Set the new scene as active
@@ -103,7 +121,7 @@ namespace Engine
                 if (window.Keyboard[Key.Escape]) _game.quit = true;   
             
                 foreach (ISystem system in _game.allSystems) {
-                    if (_game.sceneManager.ActiveScene != null) system.Iterate(_game.sceneManager.ActiveScene);
+                    if (_game.sceneManager.ActiveScene != null) system.Iterate();
                 }
 
                 // NOTE(francois): This is done here, because input handling is also a 'system'. So the quit event is
@@ -111,7 +129,9 @@ namespace Engine
                 //  Another solution would be to handle inputs diffently (it is always the fist system anyway).
                 if (_game.quit) window.Exit();
                 
-                Console.Out.WriteLine(_game.window.RenderTime);
+                Input.SaveOldButtonsStatus();
+                
+                //Console.Out.WriteLine(1.0f / (window.UpdateTime + window.RenderTime));
             };
 
             return _game;
@@ -131,6 +151,29 @@ namespace Engine
                 _game = InitGame();
 
                 return _game;
+            }
+        }
+
+        public T GetSystem<T>() where T : class // FIXME: Be more precise than just 'class'.
+        {
+            T result = allSystems.Find(s => s is T) as T;
+            
+            return result ;
+        }
+
+        public void RegisterComponent(Component component)
+        {
+            foreach (var system in allSystems)
+            {
+                if (system.IsValidComponent(component)) system.TrackComponent(component);
+            }
+        }
+
+        public void UnregisterComponent(Component component)
+        {
+            foreach (var system in allSystems)
+            {
+                if (system.IsValidComponent(component)) system.UntrackComponent(component);
             }
         }
     }

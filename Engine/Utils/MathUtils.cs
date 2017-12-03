@@ -13,5 +13,19 @@ namespace Engine.Utils
         {
             return (float) (angle * 180.0f / Math.PI);
         }
+        
+        public static float DegAngleFromQuaternion(float w)
+        {
+            var result = MathUtils.Rad2Deg((float) Math.Acos(w)) * 2;
+			
+            return result;
+        }
+
+        public static float RadAngleFromQuaternion(float w)
+        {
+            var result = ((float) Math.Acos(w)) * 2;
+			
+            return result;
+        }
     }
 }
