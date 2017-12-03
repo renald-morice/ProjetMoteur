@@ -32,14 +32,19 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Compile Include="CameraMouseMovement.cs" />
+    <Compile Include="Engine\AudioMaster.cs" />
     <Compile Include="Engine\Camera.cs" />
     <Compile Include="Engine\CameraComponent.cs" />
+    <Compile Include="Engine\FMOD\fmod.cs" />
+    <Compile Include="Engine\FMOD\fmod_dsp.cs" />
+    <Compile Include="Engine\FMOD\fmod_errors.cs" />
     <Compile Include="Engine\Input.cs" />
     <Compile Include="Engine\IPhysicComponent.cs" />
     <Compile Include="Engine\PhysicSystem.cs" />
     <Compile Include="Engine\Primitives\Renderer\CubeRenderer.cs" />
     <Compile Include="Engine\Primitives\Renderer\ShapeRenderer.cs" />
     <Compile Include="Engine\RigidBodyComponent.cs" />
+    <Compile Include="Engine\SpeakerComponent.cs" />
     <Compile Include="Engine\Utils\MathUtils.cs" />
     <Compile Include="Engine\Utils\VBOUtils.cs" />
     <Compile Include="Engine\VertexPositionColor.cs" />
