@@ -11,7 +11,7 @@ namespace Engine {
         private Dictionary<string, FMOD.Sound> _sounds;
 
         [DllImport("kernel32.dll")]
-        public static extern IntPtr _loadLibrary(string dllToLoad);
+        public static extern IntPtr LoadLibrary(string dllToLoad);
 
         private static AudioMaster _instance;
 
@@ -36,7 +36,7 @@ namespace Engine {
             if (Environment.Is64BitProcess) pathToFMODLib += "\\64\\fmod.dll";
             else pathToFMODLib += "\\32\\fmod.dll";
 
-            _loadLibrary(pathToFMODLib);
+            LoadLibrary(pathToFMODLib);
 
 
             _sounds = new Dictionary<string, FMOD.Sound>();
@@ -96,14 +96,8 @@ namespace Engine {
 
         }
 
-
-        public void Play(FMOD.Sound sound, FMOD.Channel channel) {
-
-            FMOD.RESULT result;
-
-            result = _fmodSystem.playSound(sound, null, false, out channel);
-            if (result != FMOD.RESULT.OK) Console.WriteLine("[AudioMaster Play] FMOD playSound failed : " + result);
-
+        public FMOD.System GetFmodSystem() {
+            return _fmodSystem;
         }
 
     }

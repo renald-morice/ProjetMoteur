@@ -40,6 +40,7 @@
     <Compile Include="Engine\FMOD\fmod_errors.cs" />
     <Compile Include="Engine\Primitives\Renderer\CubeRenderer.cs" />
     <Compile Include="Engine\Primitives\Renderer\ShapeRenderer.cs" />
+    <Compile Include="Engine\SpeakerComponent.cs" />
     <Compile Include="Engine\Utils\MathUtils.cs" />
     <Compile Include="Engine\Utils\VBOUtils.cs" />
     <Compile Include="Engine\VertexPositionColor.cs" />
