@@ -7,6 +7,10 @@ namespace Engine {
 
     public class AudioMaster {
 
+        //CONSTANTS
+        //---------
+        public const float DISTANCEFACTOR = 1.0f; // Units per meter. One feet would = 3.28. Centimeters would = 100.
+
         private FMOD.System _fmodSystem;
         private Dictionary<string, FMOD.Sound> _sounds;
 
@@ -76,7 +80,7 @@ namespace Engine {
 
             //If sound is already loaded, returns it
             if (_sounds.ContainsKey(soundName)) return _sounds[soundName];
-            //Otherwise
+            //Otherwise, sound creation
             else {
 
                 FMOD.Sound sound;

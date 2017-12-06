@@ -67,11 +67,18 @@ namespace Engine
                 secondObject.AddComponent<HelloWorldComponent>();
                 secondObject.AddComponent<RigidBodyComponent>();
 
+                SpeakerComponent speaker = secondObject.AddComponent<SpeakerComponent>();
+                speaker.Play(@"..\..\Resources\Audio\shotgun-mossberg590.mp3", true);
+
                 for (int i = 0; i < 10; ++i)
                 {
                     var cube = firstScene.Instantiate<Cube>();
                     cube.transform.position = new Vector3(0, 10 + i * 2, 0);
                     cube.AddComponent<RigidBodyComponent>();
+
+                    //Sound
+                    cube.AddComponent<SpeakerComponent>();
+
                 }
 
                 GameObject ground = firstScene.Instantiate<Cube>();
