@@ -63,7 +63,10 @@ public class HelloWorldComponent : GameComponent, ILogicComponent, IRenderCompon
 		_body.rigidBody.LinearVelocity = velocity;
 		
 		if (Input.GetButtonDown("Jump")) _body.rigidBody.AddForce(new JVector(0, 10000.0f, 0));
-	}
+
+        //Play shotgun sound if player shoots
+        if (Input.GetButtonDown("Shoot")) gameObject.GetComponent<SpeakerComponent>().Play(@"..\..\Resources\Audio\shotgun-mossberg590.mp3");
+    }
 
 	public void Render() {
 		//Console.Out.WriteLine ("hello, world: " + _count);

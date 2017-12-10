@@ -66,18 +66,14 @@ namespace Engine
                 GameObject secondObject = firstScene.Instantiate<Cube>();
                 secondObject.AddComponent<HelloWorldComponent>();
                 secondObject.AddComponent<RigidBodyComponent>();
+                secondObject.AddComponent<SpeakerComponent>();
 
-                SpeakerComponent speaker = secondObject.AddComponent<SpeakerComponent>();
-                speaker.Play(@"..\..\Resources\Audio\shotgun-mossberg590.mp3", true);
 
                 for (int i = 0; i < 10; ++i)
                 {
                     var cube = firstScene.Instantiate<Cube>();
                     cube.transform.position = new Vector3(0, 10 + i * 2, 0);
                     cube.AddComponent<RigidBodyComponent>();
-
-                    //Sound
-                    cube.AddComponent<SpeakerComponent>();
 
                 }
 
@@ -89,6 +85,7 @@ namespace Engine
                 
                 var camera = firstScene.GetGameObject("Main Camera"); 
                 camera.AddComponent<CameraMouseMovement>();
+
 
                 /*
                 var cameraComponent = firstObject.AddComponent<CameraComponent>();
@@ -130,6 +127,9 @@ namespace Engine
                 foreach (ISystem system in _game.allSystems) {
                     if (_game.sceneManager.ActiveScene != null) system.Iterate();
                 }
+
+                //Update AudioMaster
+                AudioMaster.Instance.GetFmodSystem().update();
 
                 // NOTE(francois): This is done here, because input handling is also a 'system'. So the quit event is
                 //  recorded in the foreach loop above.

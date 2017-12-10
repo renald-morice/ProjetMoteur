@@ -4,12 +4,11 @@ using System.IO;
 using System.Runtime.InteropServices;
 
 namespace Engine {
-
     public class AudioMaster {
 
         //CONSTANTS
         //---------
-        public const float DISTANCEFACTOR = 1.0f; // Units per meter. One feet would = 3.28. Centimeters would = 100.
+        private const float distanceFactor = 1.0f; // Units per meter. One feet would = 3.28. Centimeters would = 100.
 
         private FMOD.System _fmodSystem;
         private Dictionary<string, FMOD.Sound> _sounds;
@@ -53,6 +52,9 @@ namespace Engine {
             result = FMOD.Factory.System_Create(out _fmodSystem);
             if(result != FMOD.RESULT.OK) Console.WriteLine("[AudioMaster constructor] FMOD System_Create failed : " + result);
 
+            result = _fmodSystem.set3DSettings(1.0f, distanceFactor, 1.0f);
+            if (result != FMOD.RESULT.OK) Console.WriteLine("[AudioMaster constructor] FMOD set3DSettings failed : " + result);
+
             result = _fmodSystem.setDSPBufferSize(1024, 10);
             if (result != FMOD.RESULT.OK) Console.WriteLine("[AudioMaster constructor] FMOD setDSPBufferSize failed : " + result);
 
@@ -87,21 +89,24 @@ namespace Engine {
 
                 FMOD.RESULT result;
                 result = _fmodSystem.createSound(soundPath, FMOD.MODE._3D, out sound);
-
                 if (result != FMOD.RESULT.OK) Console.WriteLine("[AudioMaster LoadSong] FMOD createStream failed : " + result);
-                else {
-                    _sounds.Add(soundName, sound);
-                    return sound;
-                }
+
+                result = sound.set3DMinMaxDistance(2.0f * distanceFactor, 5000.0f * distanceFactor);
+                if (result != FMOD.RESULT.OK) Console.WriteLine("[AudioMaster LoadSound] FMOD set3DMinMaxDistance failed : " + result);
+
+                _sounds.Add(soundName, sound);
+                return sound;
 
             }
-
-            return null;
 
         }
 
         public FMOD.System GetFmodSystem() {
             return _fmodSystem;
+        }
+
+        public float GetDistanceFactor() {
+            return distanceFactor;
         }
 
     }

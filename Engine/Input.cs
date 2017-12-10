@@ -53,7 +53,9 @@ namespace Engine
             _buttonMap["Fire2"] = Key.E;
             
             _buttonMap["Jump"] = Key.Space;
-            
+
+            _buttonMap["Shoot"] = Key.H;
+
             SaveOldButtonsStatus();
         }
 
