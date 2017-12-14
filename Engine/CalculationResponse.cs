@@ -29,7 +29,6 @@ namespace Engine
         public int X { get; set; }
 
         public int Y { get; set; }
-        public int Result;
 
         [PacketIgnoreProperty]
         public int I_WILL_BE_IGNORED { get; set; }
@@ -43,7 +42,6 @@ namespace Engine
         public override void BeforeReceive()
         {
             Y -= 5;
-            Result = Y;
             base.BeforeReceive();
         }
     }

@@ -21,6 +21,8 @@ namespace Engine
         private CalculationRequest calculationRequest;
         private CalculationResponse calculationResponse;
         private ClientConnectionContainer clientConnectionContainer;
+        private UdpConnection actualUdpConnection;
+        private TcpConnection actualTcpConnection;
         private Connection actualConnection;
         private int connected;
 
@@ -49,8 +51,38 @@ namespace Engine
             //2. Register what happens if we get a connection
             clientConnectionContainer.ConnectionEstablished += ClientConnectionContainer_ConnectionEstablished;
             //2. Register what happens if we lose a connection
-            clientConnectionContainer.ConnectionLost += ClientConnectionContainer_ConnectionLost;
+            clientConnectionContainer.ConnectionLost += ClientConnectionContainer_ConnectionLost;           
 
+        }
+
+        public async Task<int> InitTcp()
+        {
+            //1. Create a TcpConnection
+            var connectionWithResult = await ConnectionFactory.CreateTcpConnectionAsync(ipAdress, remotePort);
+            if (connectionWithResult.Item2 != ConnectionResult.Connected) return 0;
+            //2. The TCP connection is in the first item of the tuple.
+            actualTcpConnection = connectionWithResult.Item1;
+            //actualTcpConnection.Send(new CalculationRequest(5, 5));
+            Console.WriteLine("Test");
+            return 1;
+            //actualTcpConnection.Close(Network.Enums.CloseReason.ClientClosed);
+           
+        }
+
+        public async void InitUdp()
+        {
+            var continu = await InitTcp();
+            if (continu != 0)
+            {
+                //1. Create a UDP connection. A UDP connection requires an alive TCP connection.
+                var connectionWithResult = await ConnectionFactory.CreateUdpConnectionAsync(actualTcpConnection);
+                if (connectionWithResult.Item2 != ConnectionResult.Connected) return;
+                //2. The UDP connection is in the first item of the tuple.
+                actualUdpConnection = connectionWithResult.Item1;
+               // actualUdpConnection.Send(new CalculationRequest(5, 5));
+                //Console.WriteLine("Test");
+                //actualUdpConnection.Close(Network.Enums.CloseReason.ClientClosed);
+            }
         }
 
 
@@ -89,8 +121,10 @@ namespace Engine
             connected = 1;
             Console.WriteLine("Connection client Established");
             Console.WriteLine($"{connectionType} Connection received {connection.IPRemoteEndPoint}.");
+            Console.WriteLine(connection.IPLocalEndPoint);
+            //actualConnection.SendPing();
             actualConnection.Send(new CalculationRequest(5, 5));
-            actualConnection.RegisterStaticPacketHandler<CalculationResponse>(calculationResponseReceived);
+            actualConnection.RegisterPacketHandler<CalculationResponse>(calculationResponseReceived,this);
 
         }
 
