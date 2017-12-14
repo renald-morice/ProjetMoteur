@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Engine {
@@ -54,9 +54,8 @@ namespace Engine {
         }
 
         //Only return the first Scene named like the parameter
-        public Scene GetGameObject(string name) {
+        public Scene GetScene(string name) {
             return _allScenes.Find(c => c.Name == name);
         }
-
     }
 }

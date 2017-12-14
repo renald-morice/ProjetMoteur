@@ -67,6 +67,9 @@ namespace Engine
                     if (_game.sceneManager.ActiveScene != null) system.Iterate();
                 }
 
+				//Update AudioMaster
+                //AudioMaster.Instance.GetFmodSystem().update();
+
                 // NOTE(francois): This is done here, because input handling is also a 'system'. So the quit event is
                 //  recorded in the foreach loop above.
                 //  Another solution would be to handle inputs diffently (it is always the fist system anyway).

@@ -4,7 +4,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProjectGuid>{489EC7B3-6CC7-4468-B4ED-7D70F0516FB3}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>Engine</RootNamespace>
     <AssemblyName>Engine</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
@@ -31,31 +31,36 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <Compile Include="AudioMaster.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="CameraComponent.cs" />
-    <Compile Include="Component.cs" />
-    <Compile Include="Game.cs" />
-    <Compile Include="GameComponent.cs" />
-    <Compile Include="GameEntity.cs" />
-    <Compile Include="GameObject.cs" />
-    <Compile Include="ILogicComponent.cs" />
+    <Compile Include="FMOD\fmod.cs" />
+    <Compile Include="FMOD\fmod_dsp.cs" />
+    <Compile Include="FMOD\fmod_errors.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="IPhysicComponent.cs" />
-    <Compile Include="IRenderComponent.cs" />
-    <Compile Include="LogicSystem.cs" />
     <Compile Include="PhysicSystem.cs" />
-    <Compile Include="Primitives\Cube.cs" />
     <Compile Include="Primitives\Renderer\CubeRenderer.cs" />
     <Compile Include="Primitives\Renderer\ShapeRenderer.cs" />
-    <Compile Include="RenderSystem.cs" />
     <Compile Include="RigidBodyComponent.cs" />
-    <Compile Include="Scene.cs" />
-    <Compile Include="SceneManager.cs" />
-    <Compile Include="System.cs" />
-    <Compile Include="Transform.cs" />
+    <Compile Include="SpeakerComponent.cs" />
     <Compile Include="Utils\MathUtils.cs" />
     <Compile Include="Utils\VBOUtils.cs" />
     <Compile Include="VertexPositionColor.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="GameComponent.cs" />
+    <Compile Include="Primitives\Cube.cs" />
+    <Compile Include="SceneManager.cs" />
+    <Compile Include="Scene.cs" />
+    <Compile Include="Component.cs" />
+    <Compile Include="GameEntity.cs" />
+    <Compile Include="GameObject.cs" />
+    <Compile Include="ILogicComponent.cs" />
+    <Compile Include="IRenderComponent.cs" />
+    <Compile Include="System.cs" />
+    <Compile Include="LogicSystem.cs" />
+    <Compile Include="RenderSystem.cs" />
+    <Compile Include="Transform.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Jitter, Version=0.2.0.0, Culture=neutral, PublicKeyToken=null">
