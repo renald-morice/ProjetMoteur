@@ -32,12 +32,13 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Compile Include="CameraMouseMovement.cs" />
+    <Compile Include="ServerTest.cs" />
     <Compile Include="Engine\Input.cs" />
     <Compile Include="Engine\IPhysicComponent.cs" />
     <Compile Include="Engine\PhysicSystem.cs" />
     <Compile Include="Engine\RigidBodyComponent.cs" />
     <Compile Include="Engine\System.cs" />
-    <Compile Include="NetworkTest.cs" />
+    <Compile Include="ClientTest.cs" />
     <Compile Include="Engine\Camera.cs" />
     <Compile Include="Engine\CameraComponent.cs" />
     <Compile Include="Engine\CalculationRequest.cs" />
