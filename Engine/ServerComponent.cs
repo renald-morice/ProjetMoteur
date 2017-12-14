@@ -33,15 +33,20 @@ namespace Engine
 
         public void Demo()
         {
+            Console.WriteLine("test1");
             //1. Create a new server container.
             ServerConnectionContainer serverConnectionContainer = ConnectionFactory.CreateServerConnectionContainer(remotePort, false);
             //2. Apply some settings
+            Console.WriteLine("test2");
             serverConnectionContainer.AllowUDPConnections = true;
             //3. Set a delegate which will be called if we receive a connection
+            Console.WriteLine("test3");
             serverConnectionContainer.ConnectionEstablished += ServerConnectionContainer_ConnectionEstablished;
             //4. Set a delegate which will be called if we lose a connection
+            Console.WriteLine("test4");
             serverConnectionContainer.ConnectionLost += ServerConnectionContainer_ConnectionLost;
             //4. Start listening on port 1234
+            Console.WriteLine("test5");
             serverConnectionContainer.StartTCPListener();
 
             Console.ReadLine();
@@ -49,11 +54,13 @@ namespace Engine
 
         private static void ServerConnectionContainer_ConnectionLost(Connection connection, ConnectionType connectionType, CloseReason closeReason)
         {
+            Console.WriteLine("Connection server lost");
             Console.WriteLine($"Connection {connection.IPRemoteEndPoint} {connectionType} lost. {closeReason}");
         }
 
         private static void ServerConnectionContainer_ConnectionEstablished(Connection connection, ConnectionType connectionType)
         {
+            Console.WriteLine("Connection client established");
             Console.WriteLine($"{connectionType} Connection received {connection.IPRemoteEndPoint}.");
         }
     }

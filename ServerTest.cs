@@ -3,13 +3,15 @@ using Engine;
 
 public class ServerTest : GameComponent,ILogicComponent
 {
+    ServerComponent server;
     public void Start()
 	{
-       ServerComponent client = new ServerComponent(1233);
-        client.Demo();
+        server = new ServerComponent(1233);
+        server.Demo();
 	}
     public void Update()
     {
+        server.Demo();
 
     }
 }

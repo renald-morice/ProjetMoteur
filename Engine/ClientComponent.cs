@@ -39,21 +39,26 @@ namespace Engine
         public void Demo()
         {
             //1. Establish a connection to the server.
+            Console.WriteLine("test1");
             clientConnectionContainer = ConnectionFactory.CreateClientConnectionContainer(ipAdress, remotePort);
             //2. Register what happens if we get a connection
+            Console.WriteLine("test2");
             clientConnectionContainer.ConnectionEstablished += ClientConnectionContainer_ConnectionEstablished;
             //2. Register what happens if we lose a connection
+            Console.WriteLine("test3");
             clientConnectionContainer.ConnectionLost += ClientConnectionContainer_ConnectionLost;
 
         }
 
         private void ClientConnectionContainer_ConnectionLost(Connection connection, Network.Enums.ConnectionType connectionType, Network.Enums.CloseReason closeReason)
         {
+            Console.WriteLine("Connection client lost");
             Console.WriteLine($"Connection {connection.IPRemoteEndPoint} {connectionType} lost. {closeReason}");
         }
 
         private void ClientConnectionContainer_ConnectionEstablished(Connection connection, Network.Enums.ConnectionType connectionType)
         {
+            Console.WriteLine("Connection client Established");
             Console.WriteLine($"{connectionType} Connection received {connection.IPRemoteEndPoint}.");
             //3. Register what happens if we receive a packet of type "CalculationResponse"
             clientConnectionContainer.RegisterPacketHandler<CalculationResponse>(calculationResponseReceived, this);
