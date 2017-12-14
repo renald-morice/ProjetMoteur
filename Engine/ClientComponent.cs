@@ -42,10 +42,10 @@ namespace Engine
             Console.WriteLine("test1");
             clientConnectionContainer = ConnectionFactory.CreateClientConnectionContainer(ipAdress, remotePort);
             //2. Register what happens if we get a connection
-            Console.WriteLine("test2");
+            //Console.WriteLine("test2");
             clientConnectionContainer.ConnectionEstablished += ClientConnectionContainer_ConnectionEstablished;
             //2. Register what happens if we lose a connection
-            Console.WriteLine("test3");
+            //Console.WriteLine("test3");
             clientConnectionContainer.ConnectionLost += ClientConnectionContainer_ConnectionLost;
 
         }
@@ -60,10 +60,11 @@ namespace Engine
         {
             Console.WriteLine("Connection client Established");
             Console.WriteLine($"{connectionType} Connection received {connection.IPRemoteEndPoint}.");
+            connection.Send(new CalculationRequest(5, 6));
             //3. Register what happens if we receive a packet of type "CalculationResponse"
-            clientConnectionContainer.RegisterPacketHandler<CalculationResponse>(calculationResponseReceived, this);
+            //clientConnectionContainer.RegisterPacketHandler<CalculationResponse>(calculationResponseReceived, this);
             //4. Send a calculation request.
-            connection.Send(new CalculationRequest(10, 10), this);
+            //connection.Send(new CalculationRequest(10, 10), this);
         }
 
         private void calculationResponseReceived(CalculationResponse response, Connection connection)

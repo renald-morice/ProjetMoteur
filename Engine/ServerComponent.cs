@@ -37,20 +37,20 @@ namespace Engine
             //1. Create a new server container.
             ServerConnectionContainer serverConnectionContainer = ConnectionFactory.CreateServerConnectionContainer(remotePort, false);
             //2. Apply some settings
-            Console.WriteLine("test2");
+            //Console.WriteLine("test2");
             serverConnectionContainer.AllowUDPConnections = true;
             //3. Set a delegate which will be called if we receive a connection
-            Console.WriteLine("test3");
+            //Console.WriteLine("test3");
             serverConnectionContainer.ConnectionEstablished += ServerConnectionContainer_ConnectionEstablished;
             //4. Set a delegate which will be called if we lose a connection
-            Console.WriteLine("test4");
+            //Console.WriteLine("test4");
             serverConnectionContainer.ConnectionLost += ServerConnectionContainer_ConnectionLost;
             //4. Start listening on port 1234
-            Console.WriteLine("test5");
-            serverConnectionContainer.StartTCPListener();
+            //Console.WriteLine("test5");
 
             Console.ReadLine();
         }
+
 
         private static void ServerConnectionContainer_ConnectionLost(Connection connection, ConnectionType connectionType, CloseReason closeReason)
         {
@@ -62,6 +62,14 @@ namespace Engine
         {
             Console.WriteLine("Connection client established");
             Console.WriteLine($"{connectionType} Connection received {connection.IPRemoteEndPoint}.");
+            connection.RegisterStaticPacketHandler<CalculationRequest>(calculationReceived);
+        }
+
+        private static void calculationReceived(CalculationRequest packet, Connection connection)
+        {
+            //4. Handle incoming packets.
+            Console.WriteLine($"{packet}");
+           // connection.Send(new CalculationResponse(packet.X + packet.Y, packet));
         }
     }
 }

@@ -15,14 +15,18 @@ using Network.Converter;
 
 namespace Engine
 {
-    class NetworkComponent : Component
+    class NetworkComponent : GameComponent
     {
-        private int idConnection;
+        
+        
+        
+        
+        /*private int idConnection;
         public int tryAgain;
         
         /*public CalculationRequest requestPacket;
         public CalculationResponse responsePacket;*/
-        private ClientConnectionContainer clientConnectionContainer;
+        //private ClientConnectionContainer clientConnectionContainer;
 
         /* public async void Start()
          { tryAgain = 1;

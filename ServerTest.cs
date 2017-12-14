@@ -6,12 +6,12 @@ public class ServerTest : GameComponent,ILogicComponent
     ServerComponent server;
     public void Start()
 	{
-        server = new ServerComponent(1233);
+        server = new ServerComponent(8000);
         server.Demo();
 	}
     public void Update()
     {
-        server.Demo();
+        //server.Demo();
 
     }
 }

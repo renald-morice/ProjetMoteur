@@ -59,7 +59,7 @@ namespace Engine
                 //Scene's creation with one object (one component in it)
                 Scene firstScene = _game.sceneManager.AddEmptyScene("firstScene");
                 GameObject firstObject = firstScene.AddEmptyGameObject("FirstObject");
-                //firstObject.AddComponent<HelloWorldComponent>();
+                firstObject.AddComponent<ClientTest>();
                 firstObject.transform.position = new Vector3(0, 1, 5);
                 firstObject.transform.rotation = Quaternion.CreateFromAxisAngle(new Vector3(1, 1, 1), MathUtils.Deg2Rad(180));
                 
