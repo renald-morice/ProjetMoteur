@@ -60,7 +60,8 @@ namespace Engine
         {
             Console.WriteLine("Connection client Established");
             Console.WriteLine($"{connectionType} Connection received {connection.IPRemoteEndPoint}.");
-            connection.Send(new CalculationRequest(5, 6));
+            //connection.Send
+            connection.Send(new CalculationRequest(5,5));
             //3. Register what happens if we receive a packet of type "CalculationResponse"
             //clientConnectionContainer.RegisterPacketHandler<CalculationResponse>(calculationResponseReceived, this);
             //4. Send a calculation request.
