@@ -17,6 +17,8 @@ namespace Engine
     {
         public string ipAdress;
         public int remotePort;
+        public CalculationRequest calculationRequest;
+        public CalculationResponse calculationResponse;
 
         private ClientConnectionContainer clientConnectionContainer;
 

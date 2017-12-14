@@ -16,6 +16,8 @@ namespace Engine
     class ServerComponent : NetworkComponent
     {
         public int remotePort;
+        public CalculationRequest calculationRequest;
+        public CalculationResponse calculationResponse;
 
         public void Demo()
         {
