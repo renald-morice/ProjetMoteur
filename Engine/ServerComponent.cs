@@ -63,6 +63,7 @@ namespace Engine
             Console.WriteLine("Connection client established");
             Console.WriteLine($"{connectionType} Connection received {connection.IPRemoteEndPoint}.");
             connection.RegisterStaticPacketHandler<CalculationRequest>(calculationReceived);
+            connection.Send(new CalculationResponse(4, 4));
         }
 
         private static void calculationReceived(CalculationRequest packet, Connection connection)

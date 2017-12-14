@@ -16,6 +16,7 @@ namespace Engine
     class ClientComponent
     {
         private string ipAdress ;
+        private int cpt;
         private int remotePort ;
         private CalculationRequest calculationRequest;
         private CalculationResponse calculationResponse;
@@ -27,10 +28,12 @@ namespace Engine
             this.remotePort = port;
             this.calculationResponse = calcResponse;
             this.calculationRequest = calcRequest;
+            this.cpt = 0;
         }
 
         public ClientComponent(string ipAd, int port)
         {
+            this.cpt = 0;
             this.ipAdress = ipAd;
             this.remotePort = port;
         }
@@ -61,9 +64,17 @@ namespace Engine
             Console.WriteLine("Connection client Established");
             Console.WriteLine($"{connectionType} Connection received {connection.IPRemoteEndPoint}.");
             //connection.Send
-            connection.Send(new CalculationRequest(5,5));
+           if (cpt == 0)
+            {
+                connection.Send(new CalculationRequest(5, 5));
+                cpt++;
+            }
+            else
+            {
+                cpt = 0;
+            }
             //3. Register what happens if we receive a packet of type "CalculationResponse"
-            //clientConnectionContainer.RegisterPacketHandler<CalculationResponse>(calculationResponseReceived, this);
+            clientConnectionContainer.RegisterPacketHandler<CalculationResponse>(calculationResponseReceived, this);
             //4. Send a calculation request.
             //connection.Send(new CalculationRequest(10, 10), this);
         }
