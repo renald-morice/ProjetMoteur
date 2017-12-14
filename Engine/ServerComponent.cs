@@ -47,8 +47,8 @@ namespace Engine
             serverConnectionContainer.ConnectionLost += ServerConnectionContainer_ConnectionLost;
             //4. Start listening on port 1234
             //Console.WriteLine("test5");
-
-            Console.ReadLine();
+            serverConnectionContainer.StartTCPListener();
+            //Console.ReadLine();
         }
 
 
@@ -68,7 +68,7 @@ namespace Engine
         private static void calculationReceived(CalculationRequest packet, Connection connection)
         {
             //4. Handle incoming packets.
-            Console.WriteLine($"{packet}");
+            Console.WriteLine($"{packet.X} est la valeur x");
            // connection.Send(new CalculationResponse(packet.X + packet.Y, packet));
         }
     }
