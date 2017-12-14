@@ -34,6 +34,7 @@ namespace FPS_Demo
 				GameObject secondObject = firstScene.Instantiate<Cube>();
 				secondObject.AddComponent<HelloWorldComponent>();
 				secondObject.AddComponent<RigidBodyComponent>();
+                secondObject.AddComponent<SpeakerComponent>();
 
 				for (int i = 0; i < 10; ++i)
 				{

@@ -34,7 +34,7 @@ namespace Engine {
 
             //In order to be able to use FMOD in both x86 and x64 architecture
 
-            string pathToFMODLib = System.IO.Path.GetFullPath("Engine\\FMOD");
+            string pathToFMODLib = System.IO.Path.GetFullPath("..\\..\\FMOD");
 
             if (Environment.Is64BitProcess) pathToFMODLib += "\\64\\fmod.dll";
             else pathToFMODLib += "\\32\\fmod.dll";

@@ -52,7 +52,7 @@ namespace Engine
             up.y = 1.0f;
             up.z = 0.0f;
 
-            //AudioMaster.Instance.GetFmodSystem().set3DListenerAttributes(0, ref positionFmodVect, ref velocityFmodVect, ref forward, ref up);
+            AudioMaster.Instance.GetFmodSystem().set3DListenerAttributes(0, ref positionFmodVect, ref velocityFmodVect, ref forward, ref up);
         }
     }
 }
