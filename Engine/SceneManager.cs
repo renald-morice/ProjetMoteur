@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 
 namespace Engine {
-
-    class SceneManager {
+    public class SceneManager {
 
         //----------
         //Attributes

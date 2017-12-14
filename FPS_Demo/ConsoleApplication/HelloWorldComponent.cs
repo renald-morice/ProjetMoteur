@@ -5,6 +5,7 @@ using Engine;
 using Engine.Utils;
 using Jitter.LinearMath;
 using OpenTK.Input;
+using Engine;
 
 public class HelloWorldComponent : GameComponent, ILogicComponent, IRenderComponent
 {
