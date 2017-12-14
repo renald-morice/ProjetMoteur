@@ -9,13 +9,16 @@ using Quaternion = System.Numerics.Quaternion;
 
 namespace Engine
 {
-	public class RenderSystem : ISystem
+	public class RenderSystem : System<IRenderComponent>
 	{
-        public void Iterate(Scene scene) {
+        public override void Iterate()
+        {
+	        UpdateComponentList();
+	        
+	        var scene = SceneManager.Instance.ActiveScene;
+	        
 	        List<CameraComponent> allCameras = scene.GetAllComponents<CameraComponent>();
 	        if (allCameras.Count == 0) return;
-	        
-            List<IRenderComponent> allComponents = scene.GetAllComponents<IRenderComponent>();
 	        
 	        var game = Game.Instance;
 	        var window = game.window;
@@ -60,9 +63,9 @@ namespace Engine
 
 		        // Invert camera position and rotation
 		        GL.Translate(-cameraPos.X, -cameraPos.Y, -cameraPos.Z);
-		        GL.Rotate(-_AngleFromQuaternion(cameraRot.W), cameraRot.X, cameraRot.Y, cameraRot.Z);
+		        GL.Rotate(-MathUtils.DegAngleFromQuaternion(cameraRot.W), cameraRot.X, cameraRot.Y, cameraRot.Z);
 
-		        foreach (IRenderComponent component in allComponents)
+		        foreach (IRenderComponent component in _components)
 		        {
 			        _RenderComponent(component);
 		        }
@@ -88,7 +91,7 @@ namespace Engine
 				var rotation = gameObject.transform.rotation;
 				var scale = gameObject.transform.scale;
 
-				var angle = _AngleFromQuaternion(rotation.W);
+				var angle = MathUtils.DegAngleFromQuaternion(rotation.W);
 
 				GL.Translate(position.X, position.Y, position.Z);
 				GL.Rotate(angle, rotation.X, rotation.Y, rotation.Z);
@@ -98,15 +101,6 @@ namespace Engine
 			component.Render();
 			
 			GL.PopMatrix();
-		}
-		
-		// TODO: Should be moved to an utility class.
-		//       Also do a to / from deg to / from rad.
-		private float _AngleFromQuaternion(float w)
-		{
-			var result = MathUtils.Rad2Deg((float) Math.Acos(w)) * 2;
-			
-			return result;
 		}
     }
 }

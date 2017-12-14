@@ -32,6 +32,12 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Compile Include="CameraMouseMovement.cs" />
+    <Compile Include="Engine\Input.cs" />
+    <Compile Include="Engine\IPhysicComponent.cs" />
+    <Compile Include="Engine\PhysicSystem.cs" />
+    <Compile Include="Engine\RigidBodyComponent.cs" />
+    <Compile Include="Engine\System.cs" />
+    <Compile Include="NetworkTest.cs" />
     <Compile Include="Engine\Camera.cs" />
     <Compile Include="Engine\CameraComponent.cs" />
     <Compile Include="Engine\CalculationRequest.cs" />
@@ -54,7 +60,6 @@
     <Compile Include="Engine\GameObject.cs" />
     <Compile Include="Engine\ILogicComponent.cs" />
     <Compile Include="Engine\IRenderComponent.cs" />
-    <Compile Include="Engine\ISystem.cs" />
     <Compile Include="Engine\LogicSystem.cs" />
     <Compile Include="Engine\RenderSystem.cs" />
     <Compile Include="Engine\Transform.cs" />
@@ -62,6 +67,9 @@
     <Compile Include="HelloWorldComponent.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Jitter, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\JitterPhysics.0.2.0.20\lib\net4\Jitter.dll</HintPath>
+    </Reference>
     <Reference Include="Network, Version=3.3.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\Network.4.4.0.5\lib\net452\Network.dll</HintPath>
     </Reference>
@@ -81,7 +89,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="OpenTK.dll.config" />
-    <None Include="packages.config" />
+    <None Include="OpenTK.dll.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
 </Project>
