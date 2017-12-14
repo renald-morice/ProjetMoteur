@@ -13,11 +13,23 @@ using Network.Converter;
 
 namespace Engine
 {
-    class ServerComponent : NetworkComponent
+    class ServerComponent
     {
-        public int remotePort;
-        public CalculationRequest calculationRequest;
-        public CalculationResponse calculationResponse;
+        private int remotePort;
+        private CalculationRequest calculationRequest;
+        private CalculationResponse calculationResponse;
+  
+        public ServerComponent(int port, CalculationRequest calcRequest, CalculationResponse calcResponse)
+        {
+            this.remotePort = port;
+            this.calculationResponse = calcResponse;
+            this.calculationRequest = calcRequest;
+        }
+        // Default request and response
+        public ServerComponent(int port)
+        {
+            this.remotePort = port;
+        }
 
         public void Demo()
         {

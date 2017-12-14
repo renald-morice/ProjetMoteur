@@ -13,16 +13,30 @@ using Network.Converter;
 
 namespace Engine
 {
-    class ClientComponent : NetworkComponent
+    class ClientComponent
     {
-        public string ipAdress;
-        public int remotePort;
-        public CalculationRequest calculationRequest;
-        public CalculationResponse calculationResponse;
-
+        private string ipAdress ;
+        private int remotePort ;
+        private CalculationRequest calculationRequest;
+        private CalculationResponse calculationResponse;
         private ClientConnectionContainer clientConnectionContainer;
 
-        public void Demo(int id, string ipAdress, int remotePort)
+        public ClientComponent(string ipAd,int port,CalculationRequest calcRequest, CalculationResponse calcResponse )
+        {
+            this.ipAdress = ipAd;
+            this.remotePort = port;
+            this.calculationResponse = calcResponse;
+            this.calculationRequest = calcRequest;
+        }
+
+        public ClientComponent(string ipAd, int port)
+        {
+            this.ipAdress = ipAd;
+            this.remotePort = port;
+        }
+
+
+        public void Demo()
         {
             //1. Establish a connection to the server.
             clientConnectionContainer = ConnectionFactory.CreateClientConnectionContainer(ipAdress, remotePort);
