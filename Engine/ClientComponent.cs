@@ -13,16 +13,18 @@ using Network.Converter;
 
 namespace Engine
 {
-    class ClientComponent
+    class ClientComponent : GameComponent
     {
-        private string ipAdress ;
+        private string ipAdress;
         private int cpt;
-        private int remotePort ;
+        private int remotePort;
         private CalculationRequest calculationRequest;
         private CalculationResponse calculationResponse;
         private ClientConnectionContainer clientConnectionContainer;
+        private Connection actualConnection;
+        private int connected;
 
-        public ClientComponent(string ipAd,int port,CalculationRequest calcRequest, CalculationResponse calcResponse )
+        public ClientComponent(string ipAd, int port, CalculationRequest calcRequest, CalculationResponse calcResponse)
         {
             this.ipAdress = ipAd;
             this.remotePort = port;
@@ -38,51 +40,66 @@ namespace Engine
             this.remotePort = port;
         }
 
-
-        public void Demo()
+        public void Init()
         {
+            connected = -1;
             //1. Establish a connection to the server.
-            Console.WriteLine("test1");
+            Console.WriteLine("Init");
             clientConnectionContainer = ConnectionFactory.CreateClientConnectionContainer(ipAdress, remotePort);
             //2. Register what happens if we get a connection
-            //Console.WriteLine("test2");
             clientConnectionContainer.ConnectionEstablished += ClientConnectionContainer_ConnectionEstablished;
             //2. Register what happens if we lose a connection
-            //Console.WriteLine("test3");
             clientConnectionContainer.ConnectionLost += ClientConnectionContainer_ConnectionLost;
 
         }
 
+
+        public void Loop()
+        {
+           
+
+            if (connected == 1)
+            {
+                Console.WriteLine("loop");
+
+
+                actualConnection.Send(new CalculationRequest(5, 5));
+               
+            }
+            else
+            {
+                if (connected == 0)
+                {
+                    Init();
+                }
+            }
+        }
+
         private void ClientConnectionContainer_ConnectionLost(Connection connection, Network.Enums.ConnectionType connectionType, Network.Enums.CloseReason closeReason)
         {
+            actualConnection = connection;
+            connected = 0;
             Console.WriteLine("Connection client lost");
             Console.WriteLine($"Connection {connection.IPRemoteEndPoint} {connectionType} lost. {closeReason}");
         }
 
         private void ClientConnectionContainer_ConnectionEstablished(Connection connection, Network.Enums.ConnectionType connectionType)
         {
+            actualConnection = connection;
+            connected = 1;
             Console.WriteLine("Connection client Established");
             Console.WriteLine($"{connectionType} Connection received {connection.IPRemoteEndPoint}.");
-            //connection.Send
-           if (cpt == 0)
-            {
-                connection.Send(new CalculationRequest(5, 5));
-                cpt++;
-            }
-            else
-            {
-                cpt = 0;
-            }
-            //3. Register what happens if we receive a packet of type "CalculationResponse"
-            clientConnectionContainer.RegisterPacketHandler<CalculationResponse>(calculationResponseReceived, this);
-            //4. Send a calculation request.
-            //connection.Send(new CalculationRequest(10, 10), this);
+            actualConnection.Send(new CalculationRequest(5, 5));
+            actualConnection.RegisterStaticPacketHandler<CalculationResponse>(calculationResponseReceived);
+
         }
+
 
         private void calculationResponseReceived(CalculationResponse response, Connection connection)
         {
             //5. CalculationResponse received.
-            Console.WriteLine($"Answer received {response.Result}");
+            Console.WriteLine($"Answer received {response.X}");
+            actualConnection.Send(new CalculationRequest(6, 6));
         }
     }
 }

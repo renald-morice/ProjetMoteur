@@ -4,13 +4,24 @@ using Engine;
 public class ClientTest : GameComponent,ILogicComponent
 {
     ClientComponent client;
+    private int cpt;
     public void Start()
 	{
+        cpt = -1;
         client = new ClientComponent("192.168.43.103",8000);
-        client.Demo();
+        client.Init();
 	}
     public void Update()
-    {
-       // client.Demo();
+    {/*
+        cpt++;
+        if (cpt == 0)
+        {
+            client.Loop();
+        }
+        if (cpt == 20)
+        {
+            cpt = -1;
+        }
+        */
     }
 }
