@@ -17,5 +17,9 @@ namespace Engine
         public GameObject(string name) {
             this.Name = name;
         }
-    }
+
+		virtual public void Init()
+		{
+		}
+	}
 }

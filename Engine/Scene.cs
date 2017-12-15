@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace Engine{
 
@@ -8,29 +10,25 @@ namespace Engine{
         //----------
         //Attributes
         //----------
+        [JsonProperty]
         private string _name;
+        [JsonProperty]
         private List<GameObject> _allGameObjects;
 
         //----------
         //Properties
         //----------
+        [JsonIgnore]
         public string Name { get => _name; set => _name = value; }
+        [JsonIgnore]
         public List<GameObject> AllGameObjects { get => _allGameObjects; }
-
+        
         //----------
         //Constructor
         //----------
         public Scene(string name) {
             _name = name;
             _allGameObjects = new List<GameObject>();
-
-            
-            var window = Game.Instance.window;
-            
-            // I see you...
-            // FIXME: This should be accessible from anywhere,
-            //  maybe make it a global, an attribute of each gameObject.
-            Instantiate<Camera>();
         }
 
         //----------
@@ -40,6 +38,8 @@ namespace Engine{
             GameObject gameObject = new GameObject(name);
 
             _allGameObjects.Add(gameObject);
+            gameObject.Init(); // In case we decide to do something anyway.
+            
             return gameObject;
         }
 
@@ -49,6 +49,8 @@ namespace Engine{
             T result = (T) Activator.CreateInstance(typeof(T), new object[] {});
             
             _allGameObjects.Add(result);
+            result.Init();
+            
             return result;
         }
 
@@ -76,6 +78,35 @@ namespace Engine{
             return result;
         }
 
+        public bool Save()
+        {
+            // TODO: Use game settings
+            string sceneDirectory = "../../Scenes/";
+            string sceneFile = sceneDirectory + _name + ".json";
 
+            string result = "";
+
+            try
+            {
+                System.IO.Directory.CreateDirectory(@sceneDirectory);
+                
+                result = JsonConvert.SerializeObject(this, Formatting.Indented, new JsonSerializerSettings
+                    {
+                        PreserveReferencesHandling = PreserveReferencesHandling.All,
+                        TypeNameHandling = TypeNameHandling.Objects
+                    }
+                );
+                
+                File.WriteAllText(@sceneFile, result);
+            }
+            catch (Exception e)
+            {
+                System.Console.WriteLine(e);
+                return false;
+            }
+
+            System.Console.WriteLine(result);
+            return true;
+        }
     }
 }

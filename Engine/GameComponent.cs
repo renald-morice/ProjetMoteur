@@ -1,4 +1,6 @@
-﻿namespace Engine
+﻿using Newtonsoft.Json;
+
+namespace Engine
 {
     // NOTE(francois)/TODO:
     //  This is currently used only to have access to a gameObject property
@@ -6,6 +8,7 @@
     //  This type may be used in other places to have compile-time checks. Maybe.
     public class GameComponent : Component
     {
+        [JsonIgnore]
         public GameObject gameObject { get => entity as GameObject; }
     }
 }

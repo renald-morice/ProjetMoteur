@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using Newtonsoft.Json;
 
 namespace Engine
 {
@@ -11,8 +12,10 @@ namespace Engine
 	{
 		// NOTE: Only the engine should be able to modify this value.
 		//       Ideally, it would only be GameEntity, but this can not be done in C#.
+		[JsonProperty]
 		internal GameEntity _entity;
 
+		[JsonIgnore]
 		public GameEntity entity {
 			get { return this._entity; }
 		}

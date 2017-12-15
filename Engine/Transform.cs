@@ -7,6 +7,7 @@ using System.Security.Cryptography.X509Certificates;
 using Engine.Utils;
 using FMOD;
 using Jitter.LinearMath;
+using Newtonsoft.Json;
 
 namespace Engine
 {
@@ -25,6 +26,7 @@ namespace Engine
 		}
 
 		// TODO: Do the same for local scale
+		[JsonIgnore]
 		public Vector3 localPosition { get; set; } = Vector3.Zero;
 		
 		// TODO: Set this relative to the parent
@@ -36,12 +38,13 @@ namespace Engine
 			set => localRotation = (parent == null) ? value : value * Quaternion.Inverse(parent.rotation);
 		}
 
+		[JsonIgnore]
 		public Quaternion localRotation { get; set; } = Quaternion.Identity;
 
 		public Transform parent { get; private set; } = null;
-		public List<Transform> children { get;} = new List<Transform>();
+		//public List<Transform> children { get;} = new List<Transform>();
 
-		private void _AddChild(Transform c)
+		/*private void _AddChild(Transform c)
 		{
 			children.Add(c);
 		}
@@ -49,20 +52,20 @@ namespace Engine
 		private void _RemoveChild(Transform c)
 		{
 			children.Remove(c);
-		}
+		}*/
 		
 		public void SetParent(Transform p)
 		{
-			if (children.Find(c => c == p) != null)
+			/*if (children.Find(c => c == p) != null)
 			{
 				throw new Exception("Can not set child as parent.");
-			}
+			}*/
 
-			parent?._RemoveChild(this);
+			//parent?._RemoveChild(this);
 
 			parent = p;
 
-			p?._AddChild(this);
+			//p?._AddChild(this);
 		}
 		
 		// TODO: Add Rotate / Translate / Scale, ...

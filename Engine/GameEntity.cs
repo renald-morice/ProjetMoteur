@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Engine
 {
@@ -10,6 +11,7 @@ namespace Engine
 	// Basic entity.
  	public abstract class GameEntity : IDisposable
 	{
+		[JsonProperty]
 		private List<Component> _allComponents;
 
 		public GameEntity ()

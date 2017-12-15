@@ -1,5 +1,7 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace Engine {
     public class SceneManager {
@@ -40,6 +42,10 @@ namespace Engine {
         //----------
         public Scene AddEmptyScene(string name = "Scene") {
             Scene scene = new Scene(name);
+            // I see you...
+            // FIXME: This should be accessible from anywhere,
+            //  maybe make it a global, an attribute of each gameObject.
+            scene.Instantiate<Camera>();
 
             _allScenes.Add(scene);
             return scene;
@@ -56,6 +62,37 @@ namespace Engine {
         //Only return the first Scene named like the parameter
         public Scene GetScene(string name) {
             return _allScenes.Find(c => c.Name == name);
+        }
+
+        // TODO: Need to unload previous scene (if load succeded)
+        public Scene Load()
+        {
+            // TODO: Use game settings
+            string sceneDirectory = "../../Scenes/";
+            string sceneFile = sceneDirectory + "Main" + ".json";
+
+            Scene result = null;
+
+            try
+            {
+                string data = File.ReadAllText(@sceneFile);
+                result = JsonConvert.DeserializeObject<Scene>(data, new JsonSerializerSettings
+                {
+                    PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+                    TypeNameHandling = TypeNameHandling.Objects,
+                    ObjectCreationHandling = ObjectCreationHandling.Reuse
+                });
+            }
+            catch (Exception e)
+            {
+                System.Console.WriteLine(e);
+            }
+
+            System.Console.WriteLine(result);
+
+            if (result != null) activeScene = result;
+            
+            return result;
         }
     }
 }

@@ -7,10 +7,13 @@ namespace Engine.Primitives
         // FIXME?: See FIXME? in GameObject
         public Cube() : base("Cube")
         {
-            AddComponent<CubeRenderer>();
         }
         
         public Cube(string name) : base(name)
+        {
+        }
+
+        public override void Init()
         {
             AddComponent<CubeRenderer>();
         }
