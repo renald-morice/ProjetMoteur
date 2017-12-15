@@ -5,10 +5,6 @@ using System.Numerics;
 using Engine.Primitives;
 using Engine.Utils;
 using Engine;
-using Jitter;
-using Jitter.Dynamics.Constraints;
-using OpenTK.Graphics.OpenGL;
-using FixedAngle = Jitter.Dynamics.Constraints.SingleBody.FixedAngle;
 
 // TODO:
 //       Load / Save scene (from / to JSON? : See System.Web.Script.Serialization)
@@ -17,6 +13,63 @@ namespace FPS_Demo
 {
 	public class main
 	{
+		private static void MakePlayer(Scene scene, Player type, out GameObject player, out Camera camera)
+		{
+			player = scene.Instantiate<Cube>();
+			player.transform.scale = new Vector3(1, 3, 1);
+			player.AddComponent<RigidBodyComponent>();
+			
+			var p = player.AddComponent<PlayerMovement>();
+			p.type = type;
+
+			switch (type)
+			{
+				case Player.One:
+				{
+					player.transform.position = new Vector3(-50, 0, -50);
+					player.transform.rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, MathUtils.Deg2Rad(-135));
+					camera = scene.GetGameObject("Main Camera") as Camera;		
+				} break;
+				case Player.Two:
+				{
+					player.transform.position = new Vector3(50, 0, 50);
+					player.transform.rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, MathUtils.Deg2Rad(45));
+					camera = scene.Instantiate<Camera>();
+				} break;
+					
+				default:
+				{
+					throw new Exception("toto");
+				}
+			}
+
+			p.camera = camera;
+			
+			camera.transform.SetParent(player.transform);
+			camera.transform.SetLocalPosition(new Vector3(0, 1, 1) * 5);
+			camera.transform.localRotation = Quaternion.Identity;
+			var cameraComponent = camera.GetComponent<CameraComponent>();
+			
+			cameraComponent.viewport.Width = 0.5f;
+
+			var shoot = player.AddComponent<PlayerShoot>();
+			shoot.camera = camera;
+			
+			switch (type)
+			{
+				case Player.One:
+				{
+					shoot.button = "Fire1";
+				} break;
+
+				case Player.Two:
+				{
+					cameraComponent.viewport.X = 0.5f;
+					shoot.button = "Fire2"; // TODO: Change this to a numpad key
+				} break;
+			}
+		} 
+	
 		[STAThread]
 		public static int Main(String[] args)
 		{
@@ -35,38 +88,15 @@ namespace FPS_Demo
 				ground.transform.scale = new Vector3(100, 1, 100);
 				var body = ground.AddComponent<RigidBodyComponent>();
 				body.rigidBody.IsStatic = true;
-				
-				GameObject playerOne = firstScene.Instantiate<Cube>();
-				playerOne.transform.scale = new Vector3(1, 3, 1);
-				playerOne.transform.position = new Vector3(-50, 0, -50);
-				playerOne.transform.rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, MathUtils.Deg2Rad(-135));
-				playerOne.AddComponent<RigidBodyComponent>();
-				var p1 = playerOne.AddComponent<PlayerMovement>();
-				p1.type = Player.One;
-				
-				GameObject playerTwo = firstScene.Instantiate<Cube>();
-				playerTwo.transform.scale = new Vector3(1, 3, 1);
-				playerTwo.transform.position = new Vector3(50, 0, 50);
-				playerTwo.transform.rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, MathUtils.Deg2Rad(45));
-				playerTwo.AddComponent<RigidBodyComponent>();
-				var p2 = playerTwo.AddComponent<PlayerMovement>();
-				p2.type = Player.Two;
 
-				var cameraOne = firstScene.GetGameObject("Main Camera");
-				cameraOne.transform.SetParent(playerOne.transform);
-				cameraOne.transform.localPosition = MathUtils.Rotate(new Vector3(0, 1, 1) * 5, playerOne.transform.rotation);
-				cameraOne.transform.localRotation = Quaternion.Identity;
-				var cameraOneComponent = cameraOne.GetComponent<CameraComponent>();
-				cameraOneComponent.viewport.Width = 0.5f;
+				GameObject playerOne;
+				Camera cameraOne;
+				MakePlayer(firstScene, Player.One, out playerOne, out cameraOne);
 				
-				var cameraTwo = firstScene.Instantiate<Camera>();
-				cameraTwo.transform.SetParent(playerTwo.transform);
-				cameraTwo.transform.localPosition = MathUtils.Rotate(new Vector3(0, 1, 1) * 5, playerTwo.transform.rotation);
-				cameraTwo.transform.localRotation = Quaternion.Identity;
-				var cameraTwoComponent = cameraTwo.GetComponent<CameraComponent>();
-				cameraTwoComponent.viewport.Width = 0.5f;
-				cameraTwoComponent.viewport.X = 0.5f;
-
+				GameObject playerTwo;
+				Camera cameraTwo;
+				MakePlayer(firstScene, Player.Two, out playerTwo, out cameraTwo);
+				
 				//firstScene.GetGameObject("Main Camera").AddComponent<CameraMouseMovement>();
 				//Set the new scene as active
 				game.sceneManager.ActiveScene = firstScene;

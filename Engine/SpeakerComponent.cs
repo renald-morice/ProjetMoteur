@@ -69,7 +69,6 @@ namespace Engine {
 
         public void Update() {
 
-            if (IsPlaying()) UpdateSpeakerAttributes();
         }
 
 
@@ -97,6 +96,10 @@ namespace Engine {
             if (result != FMOD.RESULT.OK) Console.WriteLine("[SpeakerComponent Update] FMOD set3DAttributes failed : " + result);
         }
 
+        public void LateUpdate()
+        {
+            if (IsPlaying()) UpdateSpeakerAttributes();
+        }
     }
 
 }

@@ -57,6 +57,7 @@
     <Compile Include="HelloWorldComponent.cs" />
     <Compile Include="main.cs" />
     <Compile Include="PlayerMovement.cs" />
+    <Compile Include="PlayerShoot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -102,6 +102,9 @@ namespace Engine
 			
 			GL.PopMatrix();
 		}
+		
+		// TODO: GUI rendering?
+		public override void LateIterate() {}
     }
 }
 

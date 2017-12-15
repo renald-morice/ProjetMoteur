@@ -26,6 +26,7 @@ namespace Engine
             system.world.AddBody(rigidBody);
 
             rigidBody.AllowDeactivation = false;
+            CopyState();
         }
 
         public void CopyState()

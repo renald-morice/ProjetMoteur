@@ -29,10 +29,12 @@ namespace Engine
 		
             movement *= speed * ((badMouseBeahviour * badMouseBeahviour / 10) + 1);
 
-            gameObject.transform.position +=  movement;
+            //gameObject.transform.position +=  movement;
             
-            var position = gameObject.transform.position;
-            gameObject.transform.position = new Vector3(position.X, position.Y, badMouseBeahviour * Math.Abs(badMouseBeahviour));  
+            var position = gameObject.transform.localPosition;
+            gameObject.transform.localPosition = new Vector3(position.X, position.Y, badMouseBeahviour * Math.Abs(badMouseBeahviour));  
         }
+        
+        public void LateUpdate() {}
     }
 }

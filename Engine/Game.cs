@@ -61,18 +61,26 @@ namespace Engine
             window.UpdateFrame += (sender, e) =>
             {
                 // TODO: See NOTE below. This should be moved to whatever place the input handling is done.
-                if (window.Keyboard[Key.Escape]) _game.quit = true;   
-            
-                foreach (ISystem system in _game.allSystems) {
-                    if (_game.sceneManager.ActiveScene != null) system.Iterate();
-                }
+                if (window.Keyboard[Key.Escape]) _game.quit = true;
 
-				//Update AudioMaster
-                //AudioMaster.Instance.GetFmodSystem().update();
+                if (_game.sceneManager.ActiveScene != null)
+                {
+                    foreach (ISystem system in _game.allSystems)
+                    {
+                        system.Iterate();
+                    }
+                    
+                    foreach (ISystem system in _game.allSystems) {
+                        system.LateIterate();
+                    }
+                    
+                    //Update AudioMaster
+                    //AudioMaster.Instance.GetFmodSystem().update();
+                }
 
                 // NOTE(francois): This is done here, because input handling is also a 'system'. So the quit event is
                 //  recorded in the foreach loop above.
-                //  Another solution would be to handle inputs diffently (it is always the fist system anyway).
+                //  Another solution would be to handle inputs diffently (it is always the first system anyway).
                 if (_game.quit) window.Exit();
                 
                 Input.SaveOldButtonsStatus();

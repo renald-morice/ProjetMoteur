@@ -72,5 +72,7 @@ public class HelloWorldComponent : GameComponent, ILogicComponent, IRenderCompon
 	public void Render() {
 		//Console.Out.WriteLine ("hello, world: " + _count);
 	}
+	
+	public void LateUpdate() {}
 }
 

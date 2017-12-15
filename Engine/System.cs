@@ -7,6 +7,7 @@ namespace Engine
 	public interface ISystem 
 	{
 		void Iterate();
+		void LateIterate(); // Called after each ISystem.Iterate has been called (just used for LogicSystem right now).
 		bool IsValidComponent(Component component);
 		void TrackComponent(Component component);
 		void UntrackComponent(Component component);
@@ -40,6 +41,7 @@ namespace Engine
 		}
 
 		public abstract void Iterate();
+		public abstract void LateIterate();
 
 		// Move new component to the component list
 		protected void UpdateComponentList()

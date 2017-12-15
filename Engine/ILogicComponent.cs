@@ -6,6 +6,7 @@ namespace Engine
 	{
 		void Start();
 		void Update();
+		void LateUpdate();
 	}
 }
 

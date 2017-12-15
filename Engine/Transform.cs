@@ -67,7 +67,7 @@ namespace Engine
 		
 		// TODO: Add Rotate / Translate / Scale, ...
 
-		public void Translate(Vector3 movement, Space space = Space.World)
+		public void Translate(Vector3 movement, Space space = Space.Self)
 		{
 			if (space == Space.World)
 			{
@@ -76,6 +76,18 @@ namespace Engine
 			else
 			{
 				localPosition += MathUtils.Rotate(movement, rotation);
+			}
+		}
+
+		public void SetLocalPosition(Vector3 p, Space space = Space.Self)
+		{
+			if (space == Space.World)
+			{
+				localPosition = p;
+			}
+			else
+			{
+				localPosition = MathUtils.Rotate(p, rotation);
 			}
 		}
 	}

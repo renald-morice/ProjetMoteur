@@ -54,5 +54,7 @@ namespace Engine
 
             //AudioMaster.Instance.GetFmodSystem().set3DListenerAttributes(0, ref positionFmodVect, ref velocityFmodVect, ref forward, ref up);
         }
+        
+        public void LateUpdate() {}
     }
 }

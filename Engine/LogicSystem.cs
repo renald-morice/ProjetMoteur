@@ -17,6 +17,13 @@ namespace Engine
                 component.Update();
             }
         }
+
+	    public override void LateIterate()
+	    {
+		    foreach (var component in _components) {
+			    component.LateUpdate();
+		    }
+	    }
 	}
 }
 

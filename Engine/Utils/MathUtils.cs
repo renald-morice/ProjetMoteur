@@ -38,5 +38,10 @@ namespace Engine.Utils
         {
             return Vector3.Transform(v, q);
         }
+
+        public static JVector ToJVector(Vector3 v)
+        {
+            return new JVector(v.X, v.Y, v.Z);
+        }
     }
 }
