@@ -56,6 +56,7 @@
     <Compile Include="CameraMouseMovement.cs" />
     <Compile Include="HelloWorldComponent.cs" />
     <Compile Include="main.cs" />
+    <Compile Include="PlayerMovement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

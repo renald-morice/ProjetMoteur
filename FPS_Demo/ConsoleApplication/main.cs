@@ -5,6 +5,10 @@ using System.Numerics;
 using Engine.Primitives;
 using Engine.Utils;
 using Engine;
+using Jitter;
+using Jitter.Dynamics.Constraints;
+using OpenTK.Graphics.OpenGL;
+using FixedAngle = Jitter.Dynamics.Constraints.SingleBody.FixedAngle;
 
 // TODO:
 //       Load / Save scene (from / to JSON? : See System.Web.Script.Serialization)
@@ -24,56 +28,46 @@ namespace FPS_Demo
 				//    	   (First, create a metadata file for the game with the necessary settings
 				//       (see TODO about GameWindow), as well as a default scene to load)
 
-				//Scene's creation with one object (one component in it)
-				Scene firstScene = game.sceneManager.AddEmptyScene("firstScene");
-				GameObject firstObject = firstScene.AddEmptyGameObject("FirstObject");
-				//firstObject.AddComponent<HelloWorldComponent>();
-				firstObject.transform.position = new Vector3(0, 1, 5);
-				firstObject.transform.rotation = Quaternion.CreateFromAxisAngle(new Vector3(1, 1, 1), MathUtils.Deg2Rad(180));
-
-				GameObject secondObject = firstScene.Instantiate<Cube>();
-				secondObject.AddComponent<HelloWorldComponent>();
-				secondObject.AddComponent<RigidBodyComponent>();
-
-				for (int i = 0; i < 10; ++i)
-				{
-					var cube = firstScene.Instantiate<Cube>();
-					cube.transform.position = new Vector3(0, 10 + i * 2, 0);
-					cube.AddComponent<RigidBodyComponent>();
-				}
-
+				Scene firstScene = game.sceneManager.AddEmptyScene("Main");
+				
 				GameObject ground = firstScene.Instantiate<Cube>();
 				ground.transform.position = new Vector3(0, -5, 0);
 				ground.transform.scale = new Vector3(100, 1, 100);
 				var body = ground.AddComponent<RigidBodyComponent>();
 				body.rigidBody.IsStatic = true;
+				
+				GameObject playerOne = firstScene.Instantiate<Cube>();
+				playerOne.transform.scale = new Vector3(1, 3, 1);
+				playerOne.transform.position = new Vector3(-50, 0, -50);
+				playerOne.transform.rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, MathUtils.Deg2Rad(-135));
+				playerOne.AddComponent<RigidBodyComponent>();
+				var p1 = playerOne.AddComponent<PlayerMovement>();
+				p1.type = Player.One;
+				
+				GameObject playerTwo = firstScene.Instantiate<Cube>();
+				playerTwo.transform.scale = new Vector3(1, 3, 1);
+				playerTwo.transform.position = new Vector3(50, 0, 50);
+				playerTwo.transform.rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, MathUtils.Deg2Rad(45));
+				playerTwo.AddComponent<RigidBodyComponent>();
+				var p2 = playerTwo.AddComponent<PlayerMovement>();
+				p2.type = Player.Two;
 
-				var camera = firstScene.GetGameObject("Main Camera");
-				camera.AddComponent<CameraMouseMovement>();
+				var cameraOne = firstScene.GetGameObject("Main Camera");
+				cameraOne.transform.SetParent(playerOne.transform);
+				cameraOne.transform.localPosition = MathUtils.Rotate(new Vector3(0, 1, 1) * 5, playerOne.transform.rotation);
+				cameraOne.transform.localRotation = Quaternion.Identity;
+				var cameraOneComponent = cameraOne.GetComponent<CameraComponent>();
+				cameraOneComponent.viewport.Width = 0.5f;
+				
+				var cameraTwo = firstScene.Instantiate<Camera>();
+				cameraTwo.transform.SetParent(playerTwo.transform);
+				cameraTwo.transform.localPosition = MathUtils.Rotate(new Vector3(0, 1, 1) * 5, playerTwo.transform.rotation);
+				cameraTwo.transform.localRotation = Quaternion.Identity;
+				var cameraTwoComponent = cameraTwo.GetComponent<CameraComponent>();
+				cameraTwoComponent.viewport.Width = 0.5f;
+				cameraTwoComponent.viewport.X = 0.5f;
 
-				/*
-				var cameraComponent = firstObject.AddComponent<CameraComponent>();
-				cameraComponent.viewport.X = 0.5f;
-				cameraComponent.viewport.Y = 0.5f;
-				cameraComponent.viewport.Width = 0.5f;
-				cameraComponent.viewport.Height = 0.5f;
-				cameraComponent.clearColor = Color.White;
-	
-				var tutu = firstObject.AddComponent<CameraComponent>();
-				tutu.viewport.X = 0.5f;
-				tutu.viewport.Y = 0.0f;
-				tutu.viewport.Width = 0.5f;
-				tutu.viewport.Height = 0.5f;
-				tutu.clearColor = Color.Gray;
-				tutu.lens.left = -0.2f;
-				tutu.lens.right = 0.2f;
-				tutu.lens.bottom = -0.2f;
-				tutu.lens.top = 0.2f;
-				 */
-				var toto = camera.GetComponent<CameraComponent>();
-				//toto.viewport.Width = 0.5f;
-				toto.clearColor = Color.DarkBlue;
-
+				//firstScene.GetGameObject("Main Camera").AddComponent<CameraMouseMovement>();
 				//Set the new scene as active
 				game.sceneManager.ActiveScene = firstScene;
 			};
