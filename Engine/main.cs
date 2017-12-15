@@ -15,7 +15,6 @@ namespace Engine
 		 	Game game = Game.Instance;
 			
 			game.Run();
-
             return 0;
 		}
     }

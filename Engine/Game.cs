@@ -20,6 +20,7 @@ namespace Engine
         
         private List<ISystem> allSystems;
         private SceneManager sceneManager;
+        //private Scene scene;
         
         public GameWindow window { get; private set; }
 
@@ -48,12 +49,13 @@ namespace Engine
                 _game.allSystems.Add(new RenderSystem());
 
                 _game.sceneManager = SceneManager.Instance;
-                
+
                 // TODO: Load default scene.
                 //       (First, create a metadata file for the game with the necessary settings
                 //       (see TODO about GameWindow), as well as a default scene to load)
 
                 //Scene's creation with one object (one component in it)
+                
                 Scene firstScene = _game.sceneManager.AddEmptyScene("firstScene");
                 GameObject firstObject = firstScene.AddEmptyGameObject("FirstObject");
                 //firstObject.AddComponent<HelloWorldComponent>();
@@ -83,12 +85,33 @@ namespace Engine
                 tutu.lens.right = 0.2f;
                 tutu.lens.bottom = -0.2f;
                 tutu.lens.top = 0.2f;
-                 
+
                 var toto = camera.GetComponent<CameraComponent>();
                 toto.viewport.Width = 0.5f;
                 toto.clearColor = Color.DarkBlue;
 
-                //Set the new scene as active
+                //Serializizing a created scene: firstScene
+                firstScene.Save("sceneSave.xml");
+
+                //Deserializing an existing Scene
+                //TODO: Loading from the xml file isn't working we can only get the name of the scene
+                //A problem occur to return the GameObject
+                Scene loadScene = Scene.LoadFromFile("sceneSave.xml");
+                loadScene.Save("loadedScene.xml");
+
+                //Alternative solution use an empty scene that we fill with all GameObjects
+                Scene testScene = _game.sceneManager.AddEmptyScene("testScene.xml");
+                firstObject.Save("objectSave.xml");
+                secondObject.Save("objectSave2.xml");
+                GameObject testObject = testScene.AddEmptyGameObject("testObject");
+                GameObject testObject2 = testScene.AddEmptyGameObject("testObject2");
+                testObject = GameObject.LoadFromFile("objectSave.xml");
+                testObject2 = GameObject.LoadFromFile("objectSave2.xml");
+                testObject.Save("testObject.xml");
+                testObject2.Save("testObject2.xml");
+                testScene.Save("testScene.xml");
+                
+                //Set the new scene as active                
                 _game.sceneManager.ActiveScene = firstScene;
             };
 

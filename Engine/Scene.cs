@@ -1,13 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml.Serialization;
+using Engine.Primitives;
 
 namespace Engine{
+    [XmlInclude(typeof(Camera))]
+    [XmlInclude(typeof(Cube))]
 
     public class Scene {
 
         //----------
         //Attributes
         //----------
+        
         private string _name;
         private List<GameObject> _allGameObjects;
 
@@ -76,6 +85,24 @@ namespace Engine{
             return result;
         }
 
+        public void Save(string fileName)
+        {
+            using (var stream = new FileStream(fileName, FileMode.Create))
+            {
+                var XML = new XmlSerializer(typeof(Scene));
+                XML.Serialize(stream, this);
+            }
+        }
 
+        public static Scene LoadFromFile(string fileName)
+        {
+            using (var stream = new FileStream(fileName, FileMode.Open))
+            {
+                var XML = new XmlSerializer(typeof(Scene));
+                return (Scene)XML.Deserialize(stream);
+            }
+        }
+
+        public Scene() { }
     }
 }

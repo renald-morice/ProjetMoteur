@@ -27,8 +27,8 @@ namespace Engine
 		public Vector3 scale = Vector3.One;
 		public Quaternion rotation = Quaternion.Identity;
 		
-		public GameObject parent { get; private set; }
-		public GameObject[] children { get; private set; }
+		public GameObject parent { get; set; }
+		public GameObject[] children { get; set; }
 		
 		// TODO: Add SetParent(Transform) method (a SetChild(Transform) method may not be _that_ useful)
 		
