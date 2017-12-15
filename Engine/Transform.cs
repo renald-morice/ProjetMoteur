@@ -19,6 +19,7 @@ namespace Engine
 	
 	public class Transform
 	{
+		[JsonIgnore]
 		public Vector3 position
 		{
 			get => (parent == null) ? localPosition : localPosition +  parent.position;
@@ -26,22 +27,29 @@ namespace Engine
 		}
 
 		// TODO: Do the same for local scale
-		[JsonIgnore]
 		public Vector3 localPosition { get; set; } = Vector3.Zero;
 		
 		// TODO: Set this relative to the parent
 		public Vector3 scale = Vector3.One;
 		
+		[JsonIgnore]
 		public Quaternion rotation
 		{
 			get => (parent == null) ? localRotation : localRotation * parent.rotation;
 			set => localRotation = (parent == null) ? value : value * Quaternion.Inverse(parent.rotation);
 		}
 
-		[JsonIgnore]
 		public Quaternion localRotation { get; set; } = Quaternion.Identity;
 
+		[JsonProperty]
 		public Transform parent { get; private set; } = null;
+
+		/*[JsonConstructor]
+		public Transform(Vector3 localPosition, Quaternion localRotation)
+		{
+			this.localPosition = localPosition;
+			this.localRotation = localRotation;
+		}*/
 		//public List<Transform> children { get;} = new List<Transform>();
 
 		/*private void _AddChild(Transform c)

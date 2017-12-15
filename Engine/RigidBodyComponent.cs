@@ -3,6 +3,7 @@ using System.Numerics;
 using Jitter.Collision.Shapes;
 using Jitter.Dynamics;
 using Jitter.LinearMath;
+using Newtonsoft.Json;
 
 namespace Engine
 {
@@ -13,7 +14,9 @@ namespace Engine
         //  But no TIME.
         // FIXME: JitterPhysics does not implement kinematic bodies (bodies without collisions).
         // NOTE(francois): Unlike Unity, RigidBody and Collider are the same.
+        [JsonIgnore]
         public RigidBody rigidBody;
+        public bool isStatic;
         
         // TODO: Add OnGround property
 
@@ -37,6 +40,7 @@ namespace Engine
             rigidBody.Position = new JVector(position.X, position.Y, position.Z);
             // NOTE(francois): I tried using JMatrix.CreateFromAxisAngle and it did not work (both in rad and deg). 
             rigidBody.Orientation = JMatrix.CreateFromQuaternion(new JQuaternion(rotation.X, rotation.Y, rotation.Z, rotation.W));
+            rigidBody.IsStatic = isStatic;
         }
         
         public void ApplyChanges()
@@ -63,7 +67,7 @@ namespace Engine
             
         }
 
-        ~RigidBodyComponent()
+        public override void OnDestroy()
         {
             PhysicSystem system = Game.Instance.GetSystem<PhysicSystem>();
             system.world.RemoveBody(rigidBody);

@@ -37,6 +37,8 @@ namespace FPS_Demo
 
                 if (Input.GetButton("Down1")) movement.Z += 1;
                 if (Input.GetButton("Up1")) movement.Z -= 1;
+                
+                if (Input.GetButtonDown("Jump")) SceneManager.Instance.Load("Main");
             }
             else
             {

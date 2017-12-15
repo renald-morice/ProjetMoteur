@@ -64,12 +64,31 @@ namespace Engine {
             return _allScenes.Find(c => c.Name == name);
         }
 
-        // TODO: Need to unload previous scene (if load succeded)
-        public Scene Load()
+        private void UnLoadActiveScene()
+        {
+            if (activeScene != null)
+            {
+                foreach (var gameObject in activeScene.AllGameObjects)
+                {
+                    gameObject.Dispose();
+                }
+            }
+        }
+
+        public void SetActiveScene(Scene scene)
+        {
+            if (scene != activeScene)
+            {
+                UnLoadActiveScene();
+                activeScene = scene;
+            }
+        }
+        
+        public Scene Load(string name)
         {
             // TODO: Use game settings
             string sceneDirectory = "../../Scenes/";
-            string sceneFile = sceneDirectory + "Main" + ".json";
+            string sceneFile = $"{sceneDirectory}{name}.json";
 
             Scene result = null;
 
@@ -78,19 +97,29 @@ namespace Engine {
                 string data = File.ReadAllText(@sceneFile);
                 result = JsonConvert.DeserializeObject<Scene>(data, new JsonSerializerSettings
                 {
-                    PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+                    PreserveReferencesHandling = PreserveReferencesHandling.All,
                     TypeNameHandling = TypeNameHandling.Objects,
                     ObjectCreationHandling = ObjectCreationHandling.Reuse
                 });
+
+                // It _is_ useful after all!
+                foreach (var component in result.GetAllComponents<Component>())
+                {
+                    component.Awake();
+                }
             }
             catch (Exception e)
             {
                 System.Console.WriteLine(e);
             }
 
-            System.Console.WriteLine(result);
-
-            if (result != null) activeScene = result;
+            if (result != null)
+            {
+                AddScene(result);
+                UnLoadActiveScene();
+                
+                activeScene = result;
+            }
             
             return result;
         }

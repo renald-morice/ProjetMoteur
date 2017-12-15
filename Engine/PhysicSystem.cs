@@ -50,7 +50,7 @@ namespace Engine
                     component.FixedUpdate();
                 }
             }
-
+            
             foreach (var component in _components)
             {
                 component.PostUpdate();

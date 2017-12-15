@@ -31,6 +31,7 @@ namespace Engine
 		}
 		
 		virtual public void Awake() {}
+		virtual public void OnDestroy() {}
 
 		public Component()
 		{
@@ -40,6 +41,9 @@ namespace Engine
 		public void Dispose()
 		{
 			Game.Instance.UnregisterComponent(this);
+			_active = false;
+			
+			OnDestroy();
 		}
 	}
 }

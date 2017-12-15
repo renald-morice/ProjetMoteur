@@ -1,13 +1,17 @@
 ﻿using System;
+using System.Numerics;
+using Newtonsoft.Json;
 
 namespace Engine
 {
 	public class GameObject : GameEntity
 	{
 		// NOTE(françois): transform itself can not be modified, only its attributes.
-        public Transform transform { get; private set; } = new Transform();
+		[JsonProperty]
+        public Transform transform { get;  private set; } = new Transform();
 		
 		// TODO?/FIXME?: Btw, should this be moved to GameEntity?
+		[JsonProperty]
 	    public string Name { get; private set; }
 	    
 	   	// FIXME?: The fact that this constructor needs a name means that every derived class of GameObject

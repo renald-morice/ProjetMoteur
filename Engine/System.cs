@@ -11,12 +11,14 @@ namespace Engine
 		bool IsValidComponent(Component component);
 		void TrackComponent(Component component);
 		void UntrackComponent(Component component);
+		void BuryComponents();
 	}
 	
 	public abstract class System<C> : ISystem where C : class
 	{
 		protected List<C> _components = new List<C>();
 		protected List<C> _newComponents = new List<C>();
+		protected List<C> _destroyedComponents = new List<C>();
 
 		public bool IsValidComponent(Component component)
 		{
@@ -37,7 +39,13 @@ namespace Engine
 		
 		public virtual void UntrackComponent(Component component)
 		{
-			bool result = _components.Remove(component as C) || _newComponents.Remove(component as C);
+			var destroyed = component as C;
+			
+			if (!_components.Contains(destroyed) && !_newComponents.Contains(destroyed)) Console.Out.WriteLine("Component not present " + destroyed);
+			else
+			{
+				_destroyedComponents.Add(destroyed);
+			}
 		}
 
 		public abstract void Iterate();
@@ -51,6 +59,16 @@ namespace Engine
 				_components.AddRange(_newComponents);
 				_newComponents.Clear();
 			}
+		}
+
+		public void BuryComponents()
+		{
+			foreach (var deleted in _destroyedComponents)
+			{
+				bool result = _components.Remove(deleted);
+			}
+			
+			_destroyedComponents.Clear();
 		}
 	}
 }

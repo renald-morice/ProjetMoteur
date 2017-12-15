@@ -74,6 +74,10 @@ namespace Engine
                         system.LateIterate();
                     }
                     
+                    foreach (ISystem system in _game.allSystems) {
+                        system.BuryComponents();
+                    }
+                    
                     //Update AudioMaster
                     //AudioMaster.Instance.GetFmodSystem().update();
                 }

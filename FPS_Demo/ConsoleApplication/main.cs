@@ -5,6 +5,7 @@ using System.Numerics;
 using Engine.Primitives;
 using Engine.Utils;
 using Engine;
+using Engine.Primitives.Renderer;
 
 // TODO:
 //       Load / Save scene (from / to JSON? : See System.Web.Script.Serialization)
@@ -82,13 +83,14 @@ namespace FPS_Demo
 				//    	   (First, create a metadata file for the game with the necessary settings
 				//       (see TODO about GameWindow), as well as a default scene to load)
 
-				Scene firstScene = game.sceneManager.AddEmptyScene("Main");
+				/*Scene firstScene = game.sceneManager.AddEmptyScene("Main");
 				
 				GameObject ground = firstScene.Instantiate<Cube>();
 				ground.transform.position = new Vector3(0, -5, 0);
 				ground.transform.scale = new Vector3(100, 1, 100);
 				var body = ground.AddComponent<RigidBodyComponent>();
-				body.rigidBody.IsStatic = true;
+				body.isStatic = true;
+			
 
 				GameObject playerOne;
 				Camera cameraOne;
@@ -98,9 +100,12 @@ namespace FPS_Demo
 				Camera cameraTwo;
 				MakePlayer(firstScene, Player.Two, out playerTwo, out cameraTwo);
 				
+				firstScene.Save();*/
+				game.sceneManager.Load("Main");
+
 				//firstScene.GetGameObject("Main Camera").AddComponent<CameraMouseMovement>();
 				//Set the new scene as active
-				game.sceneManager.ActiveScene = firstScene;
+				//game.sceneManager.ActiveScene = firstScene;
 			};
 
 			game.Run();
