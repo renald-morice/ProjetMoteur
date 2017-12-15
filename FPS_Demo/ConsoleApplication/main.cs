@@ -18,6 +18,7 @@ namespace FPS_Demo
 			player = scene.Instantiate<Cube>();
 			player.transform.scale = new Vector3(1, 3, 1);
 			player.AddComponent<RigidBodyComponent>();
+			//player.AddComponent<SpeakerComponent>();
 			
 			var p = player.AddComponent<PlayerMovement>();
 			p.type = type;

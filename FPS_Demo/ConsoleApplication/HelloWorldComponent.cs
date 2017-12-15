@@ -66,7 +66,7 @@ public class HelloWorldComponent : GameComponent, ILogicComponent, IRenderCompon
 		if (Input.GetButtonDown("Jump")) _body.rigidBody.AddForce(new JVector(0, 10000.0f, 0));
 		
 		//Play shotgun sound if player shoots
-        //if (Input.GetButtonDown("Shoot")) gameObject.GetComponent<SpeakerComponent>().Play(@"..\..\Resources\Audio\shotgun-mossberg590.mp3");
+        if (Input.GetButtonDown("Shoot")) gameObject.GetComponent<SpeakerComponent>().Play(@"..\..\Resources\Audio\shotgun-mossberg590.mp3");
 	}
 
 	public void Render() {
