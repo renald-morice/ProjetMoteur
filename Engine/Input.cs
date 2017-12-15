@@ -49,7 +49,7 @@ namespace Engine
             _buttonMap["Down1"] = Key.S;
             _buttonMap["Down2"] = Key.Down;
             
-            _buttonMap["Fire1"] = Key.A;
+            _buttonMap["Fire1"] = Key.Q;
             _buttonMap["Fire2"] = Key.E;
             
             _buttonMap["Jump"] = Key.Space;
