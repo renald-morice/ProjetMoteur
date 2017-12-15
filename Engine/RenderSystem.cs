@@ -61,9 +61,9 @@ namespace Engine
 		        GL.Frustum(cameraLens.left, cameraLens.right, cameraLens.bottom, cameraLens.top,
 			        	   cameraLens.nearPlane, cameraLens.farPlane);
 
-		        // Invert camera position and rotation
-		        GL.Translate(-cameraPos.X, -cameraPos.Y, -cameraPos.Z);
+		        // Invert camera rotation and position
 		        GL.Rotate(-MathUtils.DegAngleFromQuaternion(cameraRot.W), cameraRot.X, cameraRot.Y, cameraRot.Z);
+		        GL.Translate(-cameraPos.X, -cameraPos.Y, -cameraPos.Z);
 
 		        foreach (IRenderComponent component in _components)
 		        {

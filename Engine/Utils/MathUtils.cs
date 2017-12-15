@@ -1,4 +1,10 @@
 ﻿using System;
+using System.Security.AccessControl;
+using Jitter.LinearMath;
+using System.Numerics;
+using OpenTK;
+using Quaternion = System.Numerics.Quaternion;
+using Vector3 = System.Numerics.Vector3;
 
 namespace Engine.Utils
 {
@@ -26,6 +32,11 @@ namespace Engine.Utils
             var result = ((float) Math.Acos(w)) * 2;
 			
             return result;
+        }
+
+        public static Vector3 Rotate(Vector3 v, Quaternion q)
+        {
+            return Vector3.Transform(v, q);
         }
     }
 }

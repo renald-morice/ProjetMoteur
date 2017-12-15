@@ -1,38 +1,83 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 using System.Numerics;
+using System.Runtime.Remoting.Messaging;
+using System.Security.Cryptography.X509Certificates;
+using Engine.Utils;
+using FMOD;
+using Jitter.LinearMath;
 
 namespace Engine
 {
+	public enum Space
+	{
+		World,
+		Self
+	}
+	
 	public class Transform
 	{
-		// NOTE (francois):
-		//  This is done to disallow modifying the vectors' fields directly (i.e, position.x = 5),
-		//  to mimic the behaviour of Unity.
-		//  Is this a good thing? (Currently, nothing breaks if we change them manually
-		//  (and I do not see how it could...)
-		private Vector3 _position = Vector3.Zero;
-		public Vector3 position { get ; set; }
-		
-		// TODO: Do the same for local rotation? scale?
-		public Vector3 localPosition
+		public Vector3 position
 		{
-			get => (parent == null) ? position : position - parent.transform.position;
-			set => position = (parent == null) ? value : parent.transform.position + value;
+			get => (parent == null) ? localPosition : localPosition +  parent.position;
+			set => localPosition = (parent == null) ? value : value - parent.position;
+		}
+
+		// TODO: Do the same for local scale
+		public Vector3 localPosition { get; set; } = Vector3.Zero;
+		
+		// TODO: Set this relative to the parent
+		public Vector3 scale = Vector3.One;
+		
+		public Quaternion rotation
+		{
+			get => (parent == null) ? localRotation : localRotation * parent.rotation;
+			set => localRotation = (parent == null) ? value : value * Quaternion.Inverse(parent.rotation);
+		}
+
+		public Quaternion localRotation { get; set; } = Quaternion.Identity;
+
+		public Transform parent { get; private set; } = null;
+		public List<Transform> children { get;} = new List<Transform>();
+
+		private void _AddChild(Transform c)
+		{
+			children.Add(c);
 		}
 		
-		// NOTE (francois):
-		//  See NOTE about _position.
-		//  Should this also be done here? (Currently, these fields are just placeholders,
-		//  so I did not think about it any further)
-		public Vector3 scale = Vector3.One;
-		public Quaternion rotation = Quaternion.Identity;
+		private void _RemoveChild(Transform c)
+		{
+			children.Remove(c);
+		}
 		
-		public GameObject parent { get; private set; }
-		public GameObject[] children { get; private set; }
-		
-		// TODO: Add SetParent(Transform) method (a SetChild(Transform) method may not be _that_ useful)
+		public void SetParent(Transform p)
+		{
+			if (children.Find(c => c == p) != null)
+			{
+				throw new Exception("Can not set child as parent.");
+			}
+
+			parent?._RemoveChild(this);
+
+			parent = p;
+
+			p?._AddChild(this);
+		}
 		
 		// TODO: Add Rotate / Translate / Scale, ...
+
+		public void Translate(Vector3 movement, Space space = Space.World)
+		{
+			if (space == Space.World)
+			{
+				localPosition += movement;
+			}
+			else
+			{
+				localPosition += MathUtils.Rotate(movement, rotation);
+			}
+		}
 	}
 }
 
