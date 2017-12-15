@@ -10,7 +10,18 @@ namespace Engine {
         //Attributes
         //----------
         private static SceneManager instance = null;
-        private List<Scene> _allScenes;
+        // NOTE/FIXME/TODO(francois):
+        // After numerous design changes, having a list of scenes is not straight forward
+        // (and may not be the most common case):
+        // components are automatically added to their respective system,
+        // even if they are not in the currently displayed scene.
+        // Another option would be to delay that addition by moving it oustide the constructor.
+        // We would have to add components to their system _when the scene is set to active_ and when we add them
+        // (assuming we can not add a component to a game object that is not in the scene).
+        //
+        // (All this, remembering this is not an editor but an engine so, dynamically building
+        //  scenes would be done beforehand or one by one).
+        //private List<Scene> _allScenes;
         private Scene activeScene;
 
         //----------
@@ -23,7 +34,7 @@ namespace Engine {
         //----------
 
         private SceneManager() {
-            _allScenes = new List<Scene>();
+            //_allScenes = new List<Scene>();
             ActiveScene = null;
         }
 
@@ -40,19 +51,21 @@ namespace Engine {
         //----------
         //Methods
         //----------
-        public Scene AddEmptyScene(string name = "Scene") {
+        public Scene EmptyScene(string name = "Scene") {
             Scene scene = new Scene(name);
             // I see you...
             // FIXME: This should be accessible from anywhere,
             //  maybe make it a global, an attribute of each gameObject.
             scene.Instantiate<Camera>();
 
-            _allScenes.Add(scene);
+            activeScene = scene;
+
+            //_allScenes.Add(scene);
             return scene;
         }
 
-        public void AddScene(Scene scene) {
-            _allScenes.Add(scene);
+        /*public void AddScene(Scene scene) {
+            //_allScenes.Add(scene);
         }
 
         public void RemoveScene(Scene scene) {
@@ -62,7 +75,7 @@ namespace Engine {
         //Only return the first Scene named like the parameter
         public Scene GetScene(string name) {
             return _allScenes.Find(c => c.Name == name);
-        }
+        }*/
 
         private void UnLoadActiveScene()
         {
@@ -84,6 +97,9 @@ namespace Engine {
             }
         }
         
+        // NOTE(francois): On Json serialization.
+        // So we are all clear, I added that today in a hurry. It is not optimal, it is merely working.
+        // (btw, [JsonProperty] is just so it can serialize (and deserialize) private attributes)
         public Scene Load(string name)
         {
             // TODO: Use game settings
@@ -115,7 +131,7 @@ namespace Engine {
 
             if (result != null)
             {
-                AddScene(result);
+                //AddScene(result);
                 UnLoadActiveScene();
                 
                 activeScene = result;

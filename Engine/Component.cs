@@ -7,7 +7,6 @@ namespace Engine
 	// Basic component.
 	// TODO/FIXME: In Unity, a component that can be activated/enabled is a 'Behavior' (derived from component).
 	//             Still in Unity, a component has a reference to a GameObject, not a GameEntity.
-	// TODO: Add a OnDestroy method that each component can/must implement.
 	public abstract class Component : IDisposable
 	{
 		// NOTE: Only the engine should be able to modify this value.

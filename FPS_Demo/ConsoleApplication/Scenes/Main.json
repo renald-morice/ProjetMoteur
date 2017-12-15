@@ -54,23 +54,24 @@
           ]
         },
         "transform": {
+          "$id": "9",
           "$type": "Engine.Transform, Engine",
           "scale": {
-            "$id": "9",
+            "$id": "10",
             "$type": "System.Numerics.Vector3, System.Numerics.Vectors",
             "X": 1.0,
             "Y": 1.0,
             "Z": 1.0
           },
           "localPosition": {
-            "$id": "10",
+            "$id": "11",
             "$type": "System.Numerics.Vector3, System.Numerics.Vectors",
             "X": -3.535534,
             "Y": 5.0,
             "Z": -3.53553343
           },
           "localRotation": {
-            "$id": "11",
+            "$id": "12",
             "$type": "System.Numerics.Quaternion, System.Numerics.Vectors",
             "X": 0.0,
             "Y": 0.0,
@@ -79,24 +80,24 @@
             "IsIdentity": true
           },
           "parent": {
-            "$id": "12",
+            "$id": "13",
             "$type": "Engine.Transform, Engine",
             "scale": {
-              "$id": "13",
+              "$id": "14",
               "$type": "System.Numerics.Vector3, System.Numerics.Vectors",
               "X": 1.0,
               "Y": 3.0,
               "Z": 1.0
             },
             "localPosition": {
-              "$id": "14",
+              "$id": "15",
               "$type": "System.Numerics.Vector3, System.Numerics.Vectors",
               "X": -50.0,
               "Y": 0.0,
               "Z": -50.0
             },
             "localRotation": {
-              "$id": "15",
+              "$id": "16",
               "$type": "System.Numerics.Quaternion, System.Numerics.Vectors",
               "X": 0.0,
               "Y": -0.9238795,
@@ -104,54 +105,67 @@
               "W": 0.382683426,
               "IsIdentity": false
             },
-            "parent": null
+            "parent": null,
+            "children": {
+              "$id": "17",
+              "$values": [
+                {
+                  "$ref": "9"
+                }
+              ]
+            }
+          },
+          "children": {
+            "$id": "18",
+            "$values": []
           }
         },
         "Name": "Main Camera"
       },
       {
-        "$id": "16",
+        "$id": "19",
         "$type": "Engine.Primitives.Cube, Engine",
         "_allComponents": {
-          "$id": "17",
+          "$id": "20",
           "$values": [
             {
-              "$id": "18",
+              "$id": "21",
               "$type": "Engine.Primitives.Renderer.CubeRenderer, Engine",
               "_entity": {
-                "$ref": "16"
+                "$ref": "19"
               },
               "isActive": true
             },
             {
-              "$id": "19",
+              "$id": "22",
               "$type": "Engine.RigidBodyComponent, Engine",
               "isStatic": true,
               "_entity": {
-                "$ref": "16"
+                "$ref": "19"
               },
               "isActive": true
             }
           ]
         },
         "transform": {
+          "$id": "23",
           "$type": "Engine.Transform, Engine",
           "scale": {
-            "$id": "20",
+            "$id": "24",
             "$type": "System.Numerics.Vector3, System.Numerics.Vectors",
             "X": 100.0,
             "Y": 1.0,
             "Z": 100.0
           },
           "localPosition": {
-            "$id": "21",
+            "$id": "25",
             "$type": "System.Numerics.Vector3, System.Numerics.Vectors",
             "X": 0.0,
             "Y": -5.0,
             "Z": 0.0
           },
           "localRotation": {
-            "$id": "22",
+            "$id": "26",
             "$type": "System.Numerics.Quaternion, System.Numerics.Vectors",
             "X": 0.0,
             "Y": 0.0,
@@ -159,35 +173,39 @@
             "W": 1.0,
             "IsIdentity": true
           },
-          "parent": null
+          "parent": null,
+          "children": {
+            "$id": "27",
+            "$values": []
+          }
         },
         "Name": "Cube"
       },
       {
-        "$id": "23",
+        "$id": "28",
         "$type": "Engine.Primitives.Cube, Engine",
         "_allComponents": {
-          "$id": "24",
+          "$id": "29",
           "$values": [
             {
-              "$id": "25",
+              "$id": "30",
               "$type": "Engine.Primitives.Renderer.CubeRenderer, Engine",
               "_entity": {
-                "$ref": "23"
+                "$ref": "28"
               },
               "isActive": true
             },
             {
-              "$id": "26",
+              "$id": "31",
               "$type": "Engine.RigidBodyComponent, Engine",
               "isStatic": false,
               "_entity": {
-                "$ref": "23"
+                "$ref": "28"
               },
               "isActive": true
             },
             {
-              "$id": "27",
+              "$id": "32",
               "$type": "FPS_Demo.PlayerMovement, FPS_Demo",
               "speed": 10.0,
               "type": 0,
@@ -195,12 +213,12 @@
                 "$ref": "3"
               },
               "_entity": {
-                "$ref": "23"
+                "$ref": "28"
               },
               "isActive": true
             },
             {
-              "$id": "28",
+              "$id": "33",
               "$type": "FPS_Demo.PlayerShoot, FPS_Demo",
               "camera": {
                 "$ref": "3"
@@ -209,56 +227,56 @@
               "power": 100.0,
               "button": "Fire1",
               "_entity": {
-                "$ref": "23"
+                "$ref": "28"
               },
               "isActive": true
             }
           ]
         },
         "transform": {
-          "$ref": "12"
+          "$ref": "13"
         },
         "Name": "Cube"
       },
       {
-        "$id": "29",
+        "$id": "34",
         "$type": "Engine.Primitives.Cube, Engine",
         "_allComponents": {
-          "$id": "30",
+          "$id": "35",
           "$values": [
             {
-              "$id": "31",
+              "$id": "36",
               "$type": "Engine.Primitives.Renderer.CubeRenderer, Engine",
               "_entity": {
-                "$ref": "29"
+                "$ref": "34"
               },
               "isActive": true
             },
             {
-              "$id": "32",
+              "$id": "37",
               "$type": "Engine.RigidBodyComponent, Engine",
               "isStatic": false,
               "_entity": {
-                "$ref": "29"
+                "$ref": "34"
               },
               "isActive": true
             },
             {
-              "$id": "33",
+              "$id": "38",
               "$type": "FPS_Demo.PlayerMovement, FPS_Demo",
               "speed": 10.0,
               "type": 1,
               "camera": {
-                "$id": "34",
+                "$id": "39",
                 "$type": "Engine.Camera, Engine",
                 "_allComponents": {
-                  "$id": "35",
+                  "$id": "40",
                   "$values": [
                     {
-                      "$id": "36",
+                      "$id": "41",
                       "$type": "Engine.CameraComponent, Engine",
                       "lens": {
-                        "$id": "37",
+                        "$id": "42",
                         "$type": "Engine.CameraComponent+Lens, Engine",
                         "left": -1.0,
                         "right": 1.0,
@@ -268,10 +286,10 @@
                         "farPlane": 200.0
                       },
                       "viewport": {
-                        "$id": "38",
+                        "$id": "43",
                         "$type": "System.Drawing.RectangleF, System.Drawing",
                         "Location": {
-                          "$id": "39",
+                          "$id": "44",
                           "$type": "System.Drawing.PointF, System.Drawing",
                           "IsEmpty": false,
                           "X": 0.5,
@@ -290,30 +308,31 @@
                       },
                       "clearColor": "Black",
                       "_entity": {
-                        "$ref": "34"
+                        "$ref": "39"
                       },
                       "isActive": true
                     }
                   ]
                 },
                 "transform": {
+                  "$id": "45",
                   "$type": "Engine.Transform, Engine",
                   "scale": {
-                    "$id": "40",
+                    "$id": "46",
                     "$type": "System.Numerics.Vector3, System.Numerics.Vectors",
                     "X": 1.0,
                     "Y": 1.0,
                     "Z": 1.0
                   },
                   "localPosition": {
-                    "$id": "41",
+                    "$id": "47",
                     "$type": "System.Numerics.Vector3, System.Numerics.Vectors",
                     "X": 3.53553414,
                     "Y": 5.0,
                     "Z": 3.53553367
                   },
                   "localRotation": {
-                    "$id": "42",
+                    "$id": "48",
                     "$type": "System.Numerics.Quaternion, System.Numerics.Vectors",
                     "X": 0.0,
                     "Y": 0.0,
@@ -322,24 +341,24 @@
                     "IsIdentity": true
                   },
                   "parent": {
-                    "$id": "43",
+                    "$id": "49",
                     "$type": "Engine.Transform, Engine",
                     "scale": {
-                      "$id": "44",
+                      "$id": "50",
                       "$type": "System.Numerics.Vector3, System.Numerics.Vectors",
                       "X": 1.0,
                       "Y": 3.0,
                       "Z": 1.0
                     },
                     "localPosition": {
-                      "$id": "45",
+                      "$id": "51",
                       "$type": "System.Numerics.Vector3, System.Numerics.Vectors",
                       "X": 50.0,
                       "Y": 0.0,
                       "Z": 50.0
                     },
                     "localRotation": {
-                      "$id": "46",
+                      "$id": "52",
                       "$type": "System.Numerics.Quaternion, System.Numerics.Vectors",
                       "X": 0.0,
                       "Y": 0.382683456,
@@ -347,39 +366,51 @@
                       "W": 0.9238795,
                       "IsIdentity": false
                     },
-                    "parent": null
+                    "parent": null,
+                    "children": {
+                      "$id": "53",
+                      "$values": [
+                        {
+                          "$ref": "45"
+                        }
+                      ]
+                    }
+                  },
+                  "children": {
+                    "$id": "54",
+                    "$values": []
                   }
                 },
                 "Name": "Main Camera"
               },
               "_entity": {
-                "$ref": "29"
+                "$ref": "34"
               },
               "isActive": true
             },
             {
-              "$id": "47",
+              "$id": "55",
               "$type": "FPS_Demo.PlayerShoot, FPS_Demo",
               "camera": {
-                "$ref": "34"
+                "$ref": "39"
               },
               "fireRate": 2.0,
               "power": 100.0,
-              "button": "Fire2",
+              "button": "Shoot",
               "_entity": {
-                "$ref": "29"
+                "$ref": "34"
               },
               "isActive": true
             }
           ]
         },
         "transform": {
-          "$ref": "43"
+          "$ref": "49"
         },
         "Name": "Cube"
       },
       {
-        "$ref": "34"
+        "$ref": "39"
       }
     ]
   }

@@ -20,6 +20,9 @@ namespace Engine
         
         // TODO: Add OnGround property
 
+        // FIXME/TODO: As it stands, setting the gameObject transform before adding a rigid body,
+        // or first adding the rigid body and then modifying the transform, is... totally different!
+        // This is not intended and must be fixed!
         public override void Awake()
         {
             var scale = gameObject.transform.scale;

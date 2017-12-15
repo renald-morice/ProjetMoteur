@@ -16,8 +16,12 @@ namespace Engine
 	
 	public abstract class System<C> : ISystem where C : class
 	{
+		// FIXME: This should only keep active components
 		protected List<C> _components = new List<C>();
 		protected List<C> _newComponents = new List<C>();
+		// We can not immediatly remove components in case someone is iterating over the lists
+		// NOTE: It assumes that nobody wants to remove a not-yet-started component (those in _newComponent).
+		// TODO?: Assert that it is the case.
 		protected List<C> _destroyedComponents = new List<C>();
 
 		public bool IsValidComponent(Component component)
@@ -30,6 +34,7 @@ namespace Engine
 		{
 			var tracked = component as C;
 			
+			// TODO: This should be an assert
 			if (_newComponents.Contains(tracked) || _components.Contains(tracked)) Console.Out.WriteLine("Component already present " + tracked);
 			else
 			{
@@ -41,6 +46,7 @@ namespace Engine
 		{
 			var destroyed = component as C;
 			
+			// TODO: This should be an assert (and it is not critical, it will just do nothing)
 			if (!_components.Contains(destroyed) && !_newComponents.Contains(destroyed)) Console.Out.WriteLine("Component not present " + destroyed);
 			else
 			{
@@ -61,6 +67,7 @@ namespace Engine
 			}
 		}
 
+		// Remove deleted components from the list
 		public void BuryComponents()
 		{
 			foreach (var deleted in _destroyedComponents)

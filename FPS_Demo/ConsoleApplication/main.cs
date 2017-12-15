@@ -67,7 +67,7 @@ namespace FPS_Demo
 				case Player.Two:
 				{
 					cameraComponent.viewport.X = 0.5f;
-					shoot.button = "Fire2"; // TODO: Change this to a numpad key
+					shoot.button = "Shoot";
 				} break;
 			}
 		} 
@@ -83,24 +83,23 @@ namespace FPS_Demo
 				//    	   (First, create a metadata file for the game with the necessary settings
 				//       (see TODO about GameWindow), as well as a default scene to load)
 
-				/*Scene firstScene = game.sceneManager.AddEmptyScene("Main");
+				/*Scene scene = game.sceneManager.EmptyScene("Main");
 				
-				GameObject ground = firstScene.Instantiate<Cube>();
+				GameObject ground = scene.Instantiate<Cube>();
 				ground.transform.position = new Vector3(0, -5, 0);
 				ground.transform.scale = new Vector3(100, 1, 100);
 				var body = ground.AddComponent<RigidBodyComponent>();
 				body.isStatic = true;
-			
 
 				GameObject playerOne;
 				Camera cameraOne;
-				MakePlayer(firstScene, Player.One, out playerOne, out cameraOne);
+				MakePlayer(scene, Player.One, out playerOne, out cameraOne);
 				
 				GameObject playerTwo;
 				Camera cameraTwo;
-				MakePlayer(firstScene, Player.Two, out playerTwo, out cameraTwo);
+				MakePlayer(scene, Player.Two, out playerTwo, out cameraTwo);
 				
-				firstScene.Save();*/
+				scene.Save();*/
 				game.sceneManager.Load("Main");
 
 				//firstScene.GetGameObject("Main Camera").AddComponent<CameraMouseMovement>();

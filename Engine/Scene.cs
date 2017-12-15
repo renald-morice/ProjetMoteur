@@ -92,8 +92,8 @@ namespace Engine{
                 
                 result = JsonConvert.SerializeObject(this, Formatting.Indented, new JsonSerializerSettings
                     {
-                        PreserveReferencesHandling = PreserveReferencesHandling.All,
-                        TypeNameHandling = TypeNameHandling.Objects
+                        PreserveReferencesHandling = PreserveReferencesHandling.All, // Handle parent relationship with transform (see FIXME)
+                        TypeNameHandling = TypeNameHandling.Objects // I think this is so we can serialize abstract classes...?
                     }
                 );
                 
@@ -105,7 +105,6 @@ namespace Engine{
                 return false;
             }
 
-            System.Console.WriteLine(result);
             return true;
         }
     }

@@ -17,6 +17,8 @@ namespace Engine
 		Self
 	}
 	
+	// Transform stores (except the scale, but it _is_ a TODO) everything relative to its parent.
+	// Therefore, the actual position is always recomputed, only the local position is fix.
 	public class Transform
 	{
 		[JsonIgnore]
@@ -44,15 +46,10 @@ namespace Engine
 		[JsonProperty]
 		public Transform parent { get; private set; } = null;
 
-		/*[JsonConstructor]
-		public Transform(Vector3 localPosition, Quaternion localRotation)
-		{
-			this.localPosition = localPosition;
-			this.localRotation = localRotation;
-		}*/
-		//public List<Transform> children { get;} = new List<Transform>();
+		[JsonProperty]
+		public List<Transform> children { get; private set; } = new List<Transform>();
 
-		/*private void _AddChild(Transform c)
+		private void _AddChild(Transform c)
 		{
 			children.Add(c);
 		}
@@ -60,23 +57,23 @@ namespace Engine
 		private void _RemoveChild(Transform c)
 		{
 			children.Remove(c);
-		}*/
+		}
 		
 		public void SetParent(Transform p)
 		{
-			/*if (children.Find(c => c == p) != null)
+			if (children.Find(c => c == p) != null)
 			{
 				throw new Exception("Can not set child as parent.");
-			}*/
+			}
 
-			//parent?._RemoveChild(this);
+			parent?._RemoveChild(this);
 
 			parent = p;
 
-			//p?._AddChild(this);
+			p?._AddChild(this);
 		}
 		
-		// TODO: Add Rotate / Translate / Scale, ...
+		// TODO: Add Rotate / Scale, ...
 
 		public void Translate(Vector3 movement, Space space = Space.Self)
 		{
