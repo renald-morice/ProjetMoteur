@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Resources;
+using System.Security.Cryptography;
 using Engine.Utils;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
@@ -11,13 +12,34 @@ namespace Engine
 {
 	public class RenderSystem : System<IRenderComponent>
 	{
+		private List<CameraComponent> allCameras = new List<CameraComponent>();
+		
+		public override void TrackComponent(Component c)
+		{
+			base.TrackComponent(c);
+
+			if (c is CameraComponent possibleCamera)
+			{
+				allCameras.Add(possibleCamera);
+			}
+		}
+
+		public override void UntrackComponent(Component c)
+		{
+			base.UntrackComponent(c);
+
+			if (c is CameraComponent possibleCamera)
+			{
+				allCameras.Remove(possibleCamera);
+			}
+		}
+		
         public override void Iterate()
         {
 	        UpdateComponentList();
 	        
 	        var scene = SceneManager.Instance.ActiveScene;
-	        
-	        List<CameraComponent> allCameras = scene.GetAllComponents<CameraComponent>();
+	       	
 	        if (allCameras.Count == 0) return;
 	        
 	        var game = Game.Instance;
@@ -84,9 +106,9 @@ namespace Engine
 			//  This check should probably be done directly when querying components.
 			
 			// Translate, rotate then scale the component
-			if (component is GameComponent)
-			{
-				var gameObject = (component as GameComponent).gameObject;
+			if (component is GameComponent possibleGameComponent)
+			{				
+				var gameObject = possibleGameComponent.gameObject;
 				var position = gameObject.transform.position;
 				var rotation = gameObject.transform.rotation;
 				var scale = gameObject.transform.scale;
@@ -96,10 +118,14 @@ namespace Engine
 				GL.Translate(position.X, position.Y, position.Z);
 				GL.Rotate(angle, rotation.X, rotation.Y, rotation.Z);
 				GL.Scale(scale.X, scale.Y, scale.Z);
+				
+				component.Render();
 			}
-			
-			component.Render();
-			
+			else
+			{
+				component.Render();
+			}
+
 			GL.PopMatrix();
 		}
 		

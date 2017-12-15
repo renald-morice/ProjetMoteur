@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace Engine
 {
-    public class CameraComponent : GameComponent, ILogicComponent
+    public class CameraComponent : GameComponent, ILogicComponent, IRenderComponent
     {
         // FIXME: Near and Far plane values are totalyy bogus. Use something sensible!
         // (Far plane seems to be the z-limit after which there is no rendering)
@@ -54,6 +54,8 @@ namespace Engine
 
             //AudioMaster.Instance.GetFmodSystem().set3DListenerAttributes(0, ref positionFmodVect, ref velocityFmodVect, ref forward, ref up);
         }
+        
+        public void Render() {}
         
         public void LateUpdate() {}
     }

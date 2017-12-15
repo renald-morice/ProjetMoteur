@@ -24,7 +24,7 @@ namespace Engine
 		}
 		
 		// NOTE(francois)/FIXME: Checking to see if the component's type is valid is already done beforehand. 
-		public void TrackComponent(Component component)
+		public virtual void TrackComponent(Component component)
 		{
 			var tracked = component as C;
 			
@@ -35,7 +35,7 @@ namespace Engine
 			}
 		}
 		
-		public void UntrackComponent(Component component)
+		public virtual void UntrackComponent(Component component)
 		{
 			bool result = _components.Remove(component as C) || _newComponents.Remove(component as C);
 		}
