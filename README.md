@@ -2,7 +2,7 @@
 
 cours UQAC (8INF871) - Principes des moteurs jeux - Projet de moteur
 
-Le dossier "Game" contient l'éxécutable du jeu, cliquer sur le raccourci pour lancer le jeu
+Le dossier "Game" contient l'éxécutable du jeu, il se trouve dans Game/bin/Debug et se nomme FPS_Demo
 
 Les touches WSDA permettent de déplacer le joueur de gauche, le bouton 'A' permet de le faire tirer
 
