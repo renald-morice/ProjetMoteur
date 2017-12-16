@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Engine
 {
@@ -8,8 +9,9 @@ namespace Engine
     //  instead of crashing when accessing a real null value.
 	//  The same could be done with GameComponents.
 	// Basic entity.
-	public abstract class GameEntity
+ 	public abstract class GameEntity : IDisposable
 	{
+		[JsonProperty]
 		private List<Component> _allComponents;
 
 		public GameEntity ()
@@ -22,6 +24,8 @@ namespace Engine
 			result._entity = this;
 
 			_allComponents.Add(result);
+			
+			result.Awake();
 
 			return result;
 		}
@@ -39,17 +43,44 @@ namespace Engine
 		}
 
 		public void RemoveComponent(Component component) {
-			_allComponents.Remove(component);
+			if (component != null)
+			{
+				component.Dispose();
+				_allComponents.Remove(component);
+			}
 		}
 
 		public void RemoveComponent<T>() where T : Component {
 			T result = GetComponent<T>();
+			
+			if (result != null)
+			{
+				result.Dispose();
 
-			_allComponents.Remove(result);
+				_allComponents.Remove(result);
+			}
 		}
 
-		public void RemoveComponents<T>() where T : Component {
+		public void RemoveComponents<T>() where T : Component
+		{
+			List<Component> components = _allComponents.FindAll(c => c is T);
+
+			foreach (var c in components)
+			{
+				c.Dispose();
+			}
+
 			_allComponents.RemoveAll(c => c is T);
+		}
+
+		public void Dispose()
+		{
+			foreach (var c in _allComponents)
+			{
+				c.Dispose();
+			}
+			
+			_allComponents.Clear();
 		}
 	}
 }

@@ -1,9 +1,10 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Engine.csproj", "{489EC7B3-6CC7-4468-B4ED-7D70F0516FB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication", "..\FPS_Demo\ConsoleApplication\ConsoleApplication.csproj", "{17D97509-5FEC-46CA-A3D0-883A906CF34A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +16,10 @@ Global
 		{489EC7B3-6CC7-4468-B4ED-7D70F0516FB3}.Debug|x86.Build.0 = Debug|x86
 		{489EC7B3-6CC7-4468-B4ED-7D70F0516FB3}.Release|x86.ActiveCfg = Release|x86
 		{489EC7B3-6CC7-4468-B4ED-7D70F0516FB3}.Release|x86.Build.0 = Release|x86
+		{17D97509-5FEC-46CA-A3D0-883A906CF34A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{17D97509-5FEC-46CA-A3D0-883A906CF34A}.Debug|x86.Build.0 = Debug|Any CPU
+		{17D97509-5FEC-46CA-A3D0-883A906CF34A}.Release|x86.ActiveCfg = Release|Any CPU
+		{17D97509-5FEC-46CA-A3D0-883A906CF34A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

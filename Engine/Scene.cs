@@ -1,45 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Xml.Serialization;
-using Engine.Primitives;
+using Newtonsoft.Json;
 
 namespace Engine{
-    [XmlInclude(typeof(Camera))]
-    [XmlInclude(typeof(Cube))]
 
     public class Scene {
 
         //----------
         //Attributes
         //----------
-        
+        [JsonProperty]
         private string _name;
+        [JsonProperty]
         private List<GameObject> _allGameObjects;
 
         //----------
         //Properties
         //----------
+        [JsonIgnore]
         public string Name { get => _name; set => _name = value; }
+        [JsonIgnore]
         public List<GameObject> AllGameObjects { get => _allGameObjects; }
-
+        
         //----------
         //Constructor
         //----------
         public Scene(string name) {
             _name = name;
             _allGameObjects = new List<GameObject>();
-
-            
-            var window = Game.Instance.window;
-            
-            // I see you...
-            // FIXME: This should be accessible from anywhere,
-            //  maybe make it a global, an attribute of each gameObject.
-            Instantiate<Camera>();
         }
 
         //----------
@@ -49,6 +38,8 @@ namespace Engine{
             GameObject gameObject = new GameObject(name);
 
             _allGameObjects.Add(gameObject);
+            gameObject.Init(); // In case we decide to do something anyway.
+            
             return gameObject;
         }
 
@@ -58,6 +49,8 @@ namespace Engine{
             T result = (T) Activator.CreateInstance(typeof(T), new object[] {});
             
             _allGameObjects.Add(result);
+            result.Init();
+            
             return result;
         }
 
@@ -85,24 +78,34 @@ namespace Engine{
             return result;
         }
 
-        public void Save(string fileName)
+        public bool Save()
         {
-            using (var stream = new FileStream(fileName, FileMode.Create))
-            {
-                var XML = new XmlSerializer(typeof(Scene));
-                XML.Serialize(stream, this);
-            }
-        }
+            // TODO: Use game settings
+            string sceneDirectory = "../../Scenes/";
+            string sceneFile = sceneDirectory + _name + ".json";
 
-        public static Scene LoadFromFile(string fileName)
-        {
-            using (var stream = new FileStream(fileName, FileMode.Open))
-            {
-                var XML = new XmlSerializer(typeof(Scene));
-                return (Scene)XML.Deserialize(stream);
-            }
-        }
+            string result = "";
 
-        public Scene() { }
+            try
+            {
+                System.IO.Directory.CreateDirectory(@sceneDirectory);
+                
+                result = JsonConvert.SerializeObject(this, Formatting.Indented, new JsonSerializerSettings
+                    {
+                        PreserveReferencesHandling = PreserveReferencesHandling.All, // Handle parent relationship with transform (see FIXME)
+                        TypeNameHandling = TypeNameHandling.Objects // I think this is so we can serialize abstract classes...?
+                    }
+                );
+                
+                File.WriteAllText(@sceneFile, result);
+            }
+            catch (Exception e)
+            {
+                System.Console.WriteLine(e);
+                return false;
+            }
+
+            return true;
+        }
     }
 }
