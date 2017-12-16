@@ -25,6 +25,8 @@ namespace Engine
 
         public bool quit;
         public float FPS { get; private set; }
+
+        private static bool dummyAudioOn = true;
         
         public static Game InitGame()
         {
@@ -79,7 +81,26 @@ namespace Engine
                     }
                     
                     //Update AudioMaster
-                    //AudioMaster.Instance.GetFmodSystem().update();
+                    // NOTE(francois): The dll fails to load on my maching, and I do not have the time to do something
+                    // clever (like using creating a NullAudioMaster or something).
+                    if (dummyAudioOn)
+                    {
+                        try
+                        {
+                            AudioMaster.Instance.GetFmodSystem().update();
+                        }
+                        catch (Exception ex)
+                        {
+                            foreach (var c in SceneManager.Instance.ActiveScene.GetAllComponents<SpeakerComponent>())
+                            {
+                                c.Dispose();
+                            }
+
+                            System.Console.WriteLine(ex);
+
+                            dummyAudioOn = false;
+                        }
+                    }
                 }
 
                 // NOTE(francois): This is done here, because input handling is also a 'system'. So the quit event is
