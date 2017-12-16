@@ -14,6 +14,9 @@ namespace Engine
         //  But no TIME.
         // FIXME: JitterPhysics does not implement kinematic bodies (bodies without collisions).
         // NOTE(francois): Unlike Unity, RigidBody and Collider are the same.
+        // FIXME: Because RigidBody does not have a default constructor (and I do not have the time to find another way),
+        // it is not possible to serialize it.
+        // The current "solution" is to move everything that is needed up here.
         [JsonIgnore]
         public RigidBody rigidBody;
         public bool isStatic;

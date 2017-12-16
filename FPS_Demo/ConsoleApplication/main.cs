@@ -7,9 +7,6 @@ using Engine.Utils;
 using Engine;
 using Engine.Primitives.Renderer;
 
-// TODO:
-//       Load / Save scene (from / to JSON? : See System.Web.Script.Serialization)
-
 namespace FPS_Demo
 {
 	public class main
@@ -83,13 +80,21 @@ namespace FPS_Demo
 				//    	   (First, create a metadata file for the game with the necessary settings
 				//       (see TODO about GameWindow), as well as a default scene to load)
 
-				/*Scene scene = game.sceneManager.EmptyScene("Main");
+				/*Scene scene = game.sceneManager.EmptyScene("HelloWorld");
 				
 				GameObject ground = scene.Instantiate<Cube>();
-				ground.transform.position = new Vector3(0, -5, 0);
-				ground.transform.scale = new Vector3(100, 1, 100);
-				var body = ground.AddComponent<RigidBodyComponent>();
-				body.isStatic = true;
+				ground.transform.position = new Vector3(0, -105, 0);
+				ground.transform.scale = new Vector3(100, 100, 100);
+				ground.AddComponent<RigidBodyComponent>().isStatic = true;
+
+				GameObject wall = scene.Instantiate<Cube>();
+				wall.transform.position = new Vector3(0, 10, 0);
+				wall.transform.scale = new Vector3(25, 10, 1);
+				wall.transform.rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, MathUtils.Deg2Rad(45));
+				wall.AddComponent<RigidBodyComponent>().isStatic = false;
+				var rotatingComponent = wall.AddComponent<RotatingComponent>();
+				rotatingComponent.axis = Vector3.UnitY;
+				rotatingComponent.speed = 5.0f;
 
 				GameObject playerOne;
 				Camera cameraOne;

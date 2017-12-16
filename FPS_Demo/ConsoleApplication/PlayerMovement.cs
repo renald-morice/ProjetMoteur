@@ -39,6 +39,11 @@ namespace FPS_Demo
                 if (Input.GetButton("Up1")) movement.Z -= 1;
                 
                 if (Input.GetButtonDown("Jump")) SceneManager.Instance.Load("Main");
+                if (Input.GetButtonDown("Tab"))
+                {
+                    SceneManager manager = SceneManager.Instance;
+                    manager.Load(manager.ActiveScene.Name == "Main" ? "HelloWorld" : "Main");
+                }
             }
             else
             {
