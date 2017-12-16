@@ -17,7 +17,8 @@ namespace FPS_Demo
 			player.transform.scale = new Vector3(1, 3, 1);
 			player.AddComponent<RigidBodyComponent>();
 			player.AddComponent<SpeakerComponent>();
-			
+
+
 			var p = player.AddComponent<PlayerMovement>();
 			p.type = type;
 
@@ -80,7 +81,7 @@ namespace FPS_Demo
 				//    	   (First, create a metadata file for the game with the necessary settings
 				//       (see TODO about GameWindow), as well as a default scene to load)
 
-				/*Scene scene = game.sceneManager.EmptyScene("HelloWorld");
+				/*Scene scene = game.sceneManager.EmptyScene("Main");
 				
 				GameObject ground = scene.Instantiate<Cube>();
 				ground.transform.position = new Vector3(0, -105, 0);

@@ -26,7 +26,7 @@ namespace Engine
         public bool quit;
         public float FPS { get; private set; }
 
-        private static bool dummyAudioOn = true;
+        public static bool dummyAudioOn = true;
         
         public static Game InitGame()
         {
@@ -53,6 +53,19 @@ namespace Engine
                 _game.allSystems.Add(new RenderSystem());
 
                 _game.sceneManager = SceneManager.Instance;
+
+                // NOTE(francois): The dll fails to load on my maching, and I do not have the time to do something
+                // clever (like using creating a NullAudioMaster or something).
+                try
+                {
+                    var result = AudioMaster.Instance;
+                }
+                catch (Exception ex)
+                {
+                    System.Console.WriteLine(ex);
+
+                    dummyAudioOn = false;
+                }
             };
 
             window.Resize += (sender, e) =>
@@ -81,25 +94,9 @@ namespace Engine
                     }
                     
                     //Update AudioMaster
-                    // NOTE(francois): The dll fails to load on my maching, and I do not have the time to do something
-                    // clever (like using creating a NullAudioMaster or something).
                     if (dummyAudioOn)
                     {
-                        try
-                        {
-                            AudioMaster.Instance.GetFmodSystem().update();
-                        }
-                        catch (Exception ex)
-                        {
-                            foreach (var c in SceneManager.Instance.ActiveScene.GetAllComponents<SpeakerComponent>())
-                            {
-                                c.Dispose();
-                            }
-
-                            System.Console.WriteLine(ex);
-
-                            dummyAudioOn = false;
-                        }
+                        AudioMaster.Instance.GetFmodSystem().update();
                     }
                 }
 

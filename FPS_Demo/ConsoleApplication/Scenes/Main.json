@@ -206,6 +206,14 @@
             },
             {
               "$id": "32",
+              "$type": "Engine.SpeakerComponent, Engine",
+              "_entity": {
+                "$ref": "28"
+              },
+              "isActive": true
+            },
+            {
+              "$id": "33",
               "$type": "FPS_Demo.PlayerMovement, FPS_Demo",
               "speed": 10.0,
               "type": 0,
@@ -218,7 +226,7 @@
               "isActive": true
             },
             {
-              "$id": "33",
+              "$id": "34",
               "$type": "FPS_Demo.PlayerShoot, FPS_Demo",
               "camera": {
                 "$ref": "3"
@@ -239,44 +247,52 @@
         "Name": "Cube"
       },
       {
-        "$id": "34",
+        "$id": "35",
         "$type": "Engine.Primitives.Cube, Engine",
         "_allComponents": {
-          "$id": "35",
+          "$id": "36",
           "$values": [
             {
-              "$id": "36",
+              "$id": "37",
               "$type": "Engine.Primitives.Renderer.CubeRenderer, Engine",
               "_entity": {
-                "$ref": "34"
-              },
-              "isActive": true
-            },
-            {
-              "$id": "37",
-              "$type": "Engine.RigidBodyComponent, Engine",
-              "isStatic": false,
-              "_entity": {
-                "$ref": "34"
+                "$ref": "35"
               },
               "isActive": true
             },
             {
               "$id": "38",
+              "$type": "Engine.RigidBodyComponent, Engine",
+              "isStatic": false,
+              "_entity": {
+                "$ref": "35"
+              },
+              "isActive": true
+            },
+            {
+              "$id": "39",
+              "$type": "Engine.SpeakerComponent, Engine",
+              "_entity": {
+                "$ref": "35"
+              },
+              "isActive": true
+            },
+            {
+              "$id": "40",
               "$type": "FPS_Demo.PlayerMovement, FPS_Demo",
               "speed": 10.0,
               "type": 1,
               "camera": {
-                "$id": "39",
+                "$id": "41",
                 "$type": "Engine.Camera, Engine",
                 "_allComponents": {
-                  "$id": "40",
+                  "$id": "42",
                   "$values": [
                     {
-                      "$id": "41",
+                      "$id": "43",
                       "$type": "Engine.CameraComponent, Engine",
                       "lens": {
-                        "$id": "42",
+                        "$id": "44",
                         "$type": "Engine.CameraComponent+Lens, Engine",
                         "left": -1.0,
                         "right": 1.0,
@@ -286,10 +302,10 @@
                         "farPlane": 200.0
                       },
                       "viewport": {
-                        "$id": "43",
+                        "$id": "45",
                         "$type": "System.Drawing.RectangleF, System.Drawing",
                         "Location": {
-                          "$id": "44",
+                          "$id": "46",
                           "$type": "System.Drawing.PointF, System.Drawing",
                           "IsEmpty": false,
                           "X": 0.5,
@@ -308,31 +324,31 @@
                       },
                       "clearColor": "Black",
                       "_entity": {
-                        "$ref": "39"
+                        "$ref": "41"
                       },
                       "isActive": true
                     }
                   ]
                 },
                 "transform": {
-                  "$id": "45",
+                  "$id": "47",
                   "$type": "Engine.Transform, Engine",
                   "scale": {
-                    "$id": "46",
+                    "$id": "48",
                     "$type": "System.Numerics.Vector3, System.Numerics.Vectors",
                     "X": 1.0,
                     "Y": 1.0,
                     "Z": 1.0
                   },
                   "localPosition": {
-                    "$id": "47",
+                    "$id": "49",
                     "$type": "System.Numerics.Vector3, System.Numerics.Vectors",
                     "X": 3.53553414,
                     "Y": 5.0,
                     "Z": 3.53553367
                   },
                   "localRotation": {
-                    "$id": "48",
+                    "$id": "50",
                     "$type": "System.Numerics.Quaternion, System.Numerics.Vectors",
                     "X": 0.0,
                     "Y": 0.0,
@@ -341,24 +357,24 @@
                     "IsIdentity": true
                   },
                   "parent": {
-                    "$id": "49",
+                    "$id": "51",
                     "$type": "Engine.Transform, Engine",
                     "scale": {
-                      "$id": "50",
+                      "$id": "52",
                       "$type": "System.Numerics.Vector3, System.Numerics.Vectors",
                       "X": 1.0,
                       "Y": 3.0,
                       "Z": 1.0
                     },
                     "localPosition": {
-                      "$id": "51",
+                      "$id": "53",
                       "$type": "System.Numerics.Vector3, System.Numerics.Vectors",
                       "X": 50.0,
                       "Y": 0.0,
                       "Z": 50.0
                     },
                     "localRotation": {
-                      "$id": "52",
+                      "$id": "54",
                       "$type": "System.Numerics.Quaternion, System.Numerics.Vectors",
                       "X": 0.0,
                       "Y": 0.382683456,
@@ -368,49 +384,49 @@
                     },
                     "parent": null,
                     "children": {
-                      "$id": "53",
+                      "$id": "55",
                       "$values": [
                         {
-                          "$ref": "45"
+                          "$ref": "47"
                         }
                       ]
                     }
                   },
                   "children": {
-                    "$id": "54",
+                    "$id": "56",
                     "$values": []
                   }
                 },
                 "Name": "Main Camera"
               },
               "_entity": {
-                "$ref": "34"
+                "$ref": "35"
               },
               "isActive": true
             },
             {
-              "$id": "55",
+              "$id": "57",
               "$type": "FPS_Demo.PlayerShoot, FPS_Demo",
               "camera": {
-                "$ref": "39"
+                "$ref": "41"
               },
               "fireRate": 2.0,
               "power": 100.0,
               "button": "Shoot",
               "_entity": {
-                "$ref": "34"
+                "$ref": "35"
               },
               "isActive": true
             }
           ]
         },
         "transform": {
-          "$ref": "49"
+          "$ref": "51"
         },
         "Name": "Cube"
       },
       {
-        "$ref": "39"
+        "$ref": "41"
       }
     ]
   }

@@ -9,11 +9,20 @@ namespace Engine {
          AudioMaster _audioMaster;
 
         public SpeakerComponent() {
-            _audioMaster = AudioMaster.Instance;
+            try
+            {
+                _audioMaster = AudioMaster.Instance;
+            }
+            catch (Exception e)
+            {
+                System.Console.WriteLine(e);
+            }
         }
 
 
-        public void Play(string audioPath, bool loop = false, int loopCount = -1) {
+        public void Play(string audioPath, bool loop = false, int loopCount = -1)
+        {
+            if (!Game.dummyAudioOn) return;
 
             Stop();
 
@@ -98,7 +107,10 @@ namespace Engine {
 
         public void LateUpdate()
         {
-            if (IsPlaying()) UpdateSpeakerAttributes();
+            if (Game.dummyAudioOn)
+            {
+                if (IsPlaying()) UpdateSpeakerAttributes();
+            }
         }
     }
 

@@ -51,7 +51,7 @@ namespace FPS_Demo
                 projectileBody.rigidBody.LinearVelocity = MathUtils.ToJVector(direction * power);
                 _world.AddConstraint(new FixedAngle(projectileBody.rigidBody));
                 
-                if (Input.GetButtonDown("Shoot")) gameObject.GetComponent<SpeakerComponent>()?.Play(@"..\..\Resources\Audio\shotgun-mossberg590.mp3");
+                gameObject.GetComponent<SpeakerComponent>()?.Play(@"..\..\Resources\Audio\shotgun-mossberg590.mp3");
             }
         }
 
