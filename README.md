@@ -4,7 +4,7 @@ cours UQAC (8INF871) - Principes des moteurs jeux - Projet de moteur
 
 Le dossier "Game" contient l'éxécutable du jeu, cliquer sur le raccourci pour lancer le jeu
 
-Les touches ZQSD permettent de déplacer le joueur de gauche, le bouton 'A' permet de le faire tirer
+Les touches WSDA permettent de déplacer le joueur de gauche, le bouton 'A' permet de le faire tirer
 
 Les touches directionnelles permettent de déplacer le joueur de droite, le bouton '5' du pavé numérique permet  de le faire tirer.
 
